@@ -20,7 +20,8 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 	
-}`
+}
+```
 
 **服务端**
 ```
