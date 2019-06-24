@@ -1,6 +1,6 @@
 # laniakea-rpc #
 
-`依赖netty,打造注解开发与springboot无缝衔接`
+`依赖netty与springboot无缝衔接,基于注解开发,支持多种序列化,支持高并发,非阻塞管道,对耗时(i/o)任务独立处理`
 
 ## 环境 ##
 
@@ -11,8 +11,9 @@
 ## 使用教程 ##
 
 **客户端**
-
-`@SpringBootApplication
+```
+@SpringBootApplication
+@KearpcClient
 public class DemoApplication {
 
 	public static void main(String[] args) {
@@ -67,8 +68,6 @@ public class test{
 private Nativeinterface interface;
 
 public static void main(String[] args) throws Exception {
-        final MessageSendExecutor executor = new MessageSendExecutor("127.0.0.1:18888");
-        int parallel = 10000;
 
         class RequestThread implements Runnable{
         
@@ -88,14 +87,15 @@ public static void main(String[] args) throws Exception {
                 }
             }
         }
-        
+	
+        int parallel = 10000;
+
         sw.start();
         long start = System.currentTimeMillis();
 
 
         CountDownLatch signal = new CountDownLatch(1);
         CountDownLatch finish = new CountDownLatch(parallel);
-	int parallel = 10000;
         for (int index = 0; index < parallel; index++) {
             RequestThread client = new RequestThread(signal, finish, index);
             new Thread(client).start();
