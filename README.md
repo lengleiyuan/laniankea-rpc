@@ -11,8 +11,8 @@
 ## 使用教程 ##
 
 **客户端**
-`
-@SpringBootApplication
+
+`@SpringBootApplication
 public class DemoApplication {
 
 	public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class DemoApplication {
 }`
 
 **服务端**
-`
+```
 @KearpcServer
 @SpringBootApplication
 public class DemoApplication {
@@ -31,10 +31,11 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 		
        }
-}`
+}
+```
 
 **发布远程接口**
-`
+```
 @KearpcService
 public class Remoteinterface{
 
@@ -42,20 +43,22 @@ public class Remoteinterface{
         return i + b;
     }
     
-}`
+}
+```
 
 **本地接口**
-`
+```
 @KearpcReference(interface="Remoteinterface",protocol="PROTOSTUFFSERIALIZE")
 public interface Nativeinterface{
 
     public int add(int i,int b)
     
-}`
+}
+```
 
 
 **测试用例**
-`
+```
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class test{
@@ -69,11 +72,11 @@ public static void main(String[] args) throws Exception {
 
         class RequestThread implements Runnable{
         
-              public RequestThread( CountDownLatch signal, CountDownLatch finish, int taskNumber) {
-                    this.signal = signal;
-                    this.finish = finish;
-                    this.taskNumber = taskNumber;
-                }
+            public RequestThread( CountDownLatch signal, CountDownLatch finish, int taskNumber) {
+                   this.signal = signal;
+                   this.finish = finish;
+                   this.taskNumber = taskNumber;
+            }
                 
             public void run() {
                 try {
@@ -92,7 +95,7 @@ public static void main(String[] args) throws Exception {
 
         CountDownLatch signal = new CountDownLatch(1);
         CountDownLatch finish = new CountDownLatch(parallel);
-
+	int parallel = 10000;
         for (int index = 0; index < parallel; index++) {
             RequestThread client = new RequestThread(signal, finish, index);
             new Thread(client).start();
@@ -106,6 +109,7 @@ public static void main(String[] args) throws Exception {
         String tip = String.format("耗时: [%s] 毫秒", end - start);
         System.out.println(tip);
     }
-}`
+}
+```
 
 
