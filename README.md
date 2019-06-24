@@ -1,26 +1,29 @@
-**laniakea-rpc**
+#laniakea-rpc#
 
-依赖netty,打造注解开发与springboot无缝衔接
+`依赖netty,打造注解开发与springboot无缝衔接`
 
-**环境**
+##环境##
 
-jdk 1.8 
+`jdk 1.8` 
 
-**使用教程** 
+
+
+##使用教程##
 
 **客户端**
 
-@KearpcClient
-@SpringBootApplication
+`@SpringBootApplication
 public class DemoApplication {
+
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
-}
+	
+}`
 
 **服务端**
 
-@KearpcServer
+`@KearpcServer
 @SpringBootApplication
 public class DemoApplication {
 
@@ -28,40 +31,38 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 		
        }
-}
+}`
 
 **发布远程接口**
 
-@KearpcService
+`@KearpcService
 public class Remoteinterface{
 
     public int add(int i,int b){
         return i + b;
     }
     
-}
+}`
 
 **本地接口**
 
-@KearpcReference(interface="Remoteinterface",protocol="PROTOSTUFFSERIALIZE")
+`@KearpcReference(interface="Remoteinterface",protocol="PROTOSTUFFSERIALIZE")
 public interface Nativeinterface{
 
     public int add(int i,int b)
     
-}
+}`
 
 
 **测试用例**
 
-@RunWith(SpringRunner.class)
+`@RunWith(SpringRunner.class)
 @SpringBootTest
 public class test{
 
 @Autowired
 private Nativeinterface interface;
 
-
-private
 public static void main(String[] args) throws Exception {
         final MessageSendExecutor executor = new MessageSendExecutor("127.0.0.1:18888");
         int parallel = 10000;
@@ -105,6 +106,6 @@ public static void main(String[] args) throws Exception {
         String tip = String.format("耗时: [%s] 毫秒", end - start);
         System.out.println(tip);
     }
-}
+}`
 
 
