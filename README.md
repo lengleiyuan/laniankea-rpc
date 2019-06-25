@@ -1,6 +1,8 @@
 # laniakea-rpc #
 
-依赖netty与springboot无缝衔接,基于注解开发,支持多种序列化,支持高并发,非阻塞管道,对耗时(i/o)任务独立处理
+项目依赖netty,追随spring,打造springstarter。根据简易化理念,简化xml配置,基于注解开发。项目支持多种序列化,支持高并发,独立业务任务异步处理,减轻netty管道同步阻塞。 
+
+在学习过程中，很多时候都点到为止，对知识却不是很深刻，因此坚定要动手去做. 本人技术能力有限，闲暇之余编码,难免会有一些问题,不对的地方请指出，望包含.
 
 ## 流程 ##
 
@@ -19,11 +21,9 @@ jdk 1.8
 ```
 @SpringBootApplication
 @KearpcClient
-public class DemoApplication {
+public class ClientApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+	public static void main(String[] args) {SpringApplication.run(ClientApplication.class, args);}
 	
 }
 ```
@@ -32,12 +32,10 @@ public class DemoApplication {
 ```
 @KearpcServer
 @SpringBootApplication
-public class DemoApplication {
+public class ServerApplication {
 
-       public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-		
-       }
+       public static void main(String[] args) {SpringApplication.run(ServerApplication.class, args);}
+       
 }
 ```
 
@@ -73,9 +71,7 @@ public class test{
 @Autowired
 private Nativeinterface interface;
 
-public static void main(String[] args) throws Exception {
-
-        class RequestThread implements Runnable{
+ class RequestThread implements Runnable{
         
             public RequestThread( CountDownLatch signal, CountDownLatch finish, int taskNumber) {
                    this.signal = signal;
@@ -92,27 +88,29 @@ public static void main(String[] args) throws Exception {
                 } catch (InterruptedException ex) {
                 }
             }
-        }
-	
-        int parallel = 10000;
-        long start = System.currentTimeMillis();
+  }
+
+	public static void main(String[] args) throws Exception {
+
+		int parallel = 10000;
+		long start = System.currentTimeMillis();
 
 
-        CountDownLatch signal = new CountDownLatch(1);
-        CountDownLatch finish = new CountDownLatch(parallel);
-        for (int index = 0; index < parallel; index++) {
-            RequestThread client = new RequestThread(signal, finish, index);
-            new Thread(client).start();
-        }
-        
-        signal.countDown();
-        finish.await();
-        
-        long end = System.currentTimeMillis();
+		CountDownLatch signal = new CountDownLatch(1);
+		CountDownLatch finish = new CountDownLatch(parallel);
+		for (int index = 0; index < parallel; index++) {
+		    RequestThread client = new RequestThread(signal, finish, index);
+		    new Thread(client).start();
+		}
 
-        String tip = String.format("耗时: [%s] 毫秒", end - start);
-        System.out.println(tip);
-    }
+		signal.countDown();
+		finish.await();
+
+		long end = System.currentTimeMillis();
+
+		String tip = String.format("耗时: [%s] 毫秒", end - start);
+		System.out.println(tip);
+    	}
 }
 ```
 
