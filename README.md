@@ -33,7 +33,7 @@ public class ClientApplication {
 **服务端**
 
 ```
-com.laniakea.rpc.port=1993
+com.laniakea.rpc.port=xxxx
 com.laniakea.rpc.ip=127.0.0.1
 com.laniakea.rpc.protocol=KRYOSERIALIZE
 ```
