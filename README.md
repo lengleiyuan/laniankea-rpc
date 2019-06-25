@@ -19,9 +19,6 @@ jdk 1.8
 
 **客户端**
 
-`com.laniakea.rpc.port=1993`
-`com.laniakea.rpc.ip=127.0.0.1`
-`com.laniakea.rpc.protocol=KRYOSERIALIZE`
 
 ```
 @SpringBootApplication
@@ -34,6 +31,13 @@ public class ClientApplication {
 ```
 
 **服务端**
+
+```
+com.laniakea.rpc.port=1993
+com.laniakea.rpc.ip=127.0.0.1
+com.laniakea.rpc.protocol=KRYOSERIALIZE
+```
+
 ```
 @KearpcServer
 @SpringBootApplication
