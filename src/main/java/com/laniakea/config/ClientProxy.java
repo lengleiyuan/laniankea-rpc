@@ -3,7 +3,7 @@ package com.laniakea.config;
 
 /**
  * @author luochang
- * @version ClientProperties.java, v 0.1 2019年05月30日 18:27 luochang Exp
+ * @version ClientProxy.java, v 0.1 2019年05月30日 18:27 luochang Exp
  */
 public class ClientProxy {
 

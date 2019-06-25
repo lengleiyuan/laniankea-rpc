@@ -8,7 +8,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
  * @author luochang
- * @version KearpcServiceAnnotationPostProcessor.java, v 0.1 2019年05月30日 10:59 luochang Exp
+ * @version ServiceAnnotationPostProcessor.java, v 0.1 2019年05月30日 10:59 luochang Exp
  */
 public class ServiceAnnotationPostProcessor implements BeanPostProcessor {
 

@@ -10,7 +10,7 @@ import org.springframework.core.type.AnnotationMetadata;
 
 /**
  * @author luochang
- * @version kearpcPostProcessor.java, v 0.1 2019年05月28日 18:47 luochang Exp
+ * @version AnnotationRegisryMatcher.java, v 0.1 2019年05月28日 18:47 luochang Exp
  */
 public final class AnnotationRegisryMatcher {
 

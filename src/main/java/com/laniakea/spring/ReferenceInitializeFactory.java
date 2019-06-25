@@ -9,7 +9,7 @@ import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author luochang
- * @version RpcReferenceInitialize.java, v 0.1 2019年05月30日 17:56 luochang Exp
+ * @version ReferenceInitializeFactory.java, v 0.1 2019年05月30日 17:56 luochang Exp
  */
 public class ReferenceInitializeFactory implements FactoryBean, InitializingBean, DisposableBean {
 
