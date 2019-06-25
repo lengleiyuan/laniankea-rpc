@@ -3,8 +3,8 @@ package com.laniakea.parallel;
 import java.util.concurrent.*;
 
 /**
- * @author wb-lgc489196
- * @version KearpcThreadPool.java, v 0.1 2019年05月30日 12:01 wb-lgc489196 Exp
+ * @author luochang
+ * @version KearpcThreadPool.java, v 0.1 2019年05月30日 12:01 luochang Exp
  */
 public class KearpcThreadPool {
 

@@ -5,8 +5,8 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * @author wb-lgc489196
- * @version RpcRegistryInitialize.java, v 0.1 2019年05月30日 18:46 wb-lgc489196 Exp
+ * @author luochang
+ * @version RpcRegistryInitialize.java, v 0.1 2019年05月30日 18:46 luochang Exp
  */
 public class RegistryInitialize implements InitializingBean, DisposableBean {
 

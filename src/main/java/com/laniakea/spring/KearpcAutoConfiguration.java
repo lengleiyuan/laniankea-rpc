@@ -6,8 +6,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.*;
 
 /**
- * @author wb-lgc489196
- * @version KearpcAutoConfiguration.java, v 0.1 2019年05月29日 15:16 wb-lgc489196 Exp
+ * @author luochang
+ * @version KearpcAutoConfiguration.java, v 0.1 2019年05月29日 15:16 luochang Exp
  */
 @Configuration
 @Import(ClientAnnotationImportBeanDefinitionRegistrar.class)

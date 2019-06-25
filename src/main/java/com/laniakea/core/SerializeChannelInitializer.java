@@ -6,8 +6,8 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 
 /**
- * @author wb-lgc489196
- * @version SerializeChannelInitializer.java, v 0.1 2019年06月21日 10:11 wb-lgc489196 Exp
+ * @author luochang
+ * @version SerializeChannelInitializer.java, v 0.1 2019年06月21日 10:11 luochang Exp
  */
 public class SerializeChannelInitializer extends ChannelInitializer {
 

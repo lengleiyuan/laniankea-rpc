@@ -8,8 +8,8 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * @author wb-lgc489196
- * @version RpcReferenceInitialize.java, v 0.1 2019年05月30日 17:56 wb-lgc489196 Exp
+ * @author luochang
+ * @version RpcReferenceInitialize.java, v 0.1 2019年05月30日 17:56 luochang Exp
  */
 public class ReferenceInitializeFactory implements FactoryBean, InitializingBean, DisposableBean {
 

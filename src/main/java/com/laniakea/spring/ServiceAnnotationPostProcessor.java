@@ -7,8 +7,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
- * @author wb-lgc489196
- * @version KearpcServiceAnnotationPostProcessor.java, v 0.1 2019年05月30日 10:59 wb-lgc489196 Exp
+ * @author luochang
+ * @version KearpcServiceAnnotationPostProcessor.java, v 0.1 2019年05月30日 10:59 luochang Exp
  */
 public class ServiceAnnotationPostProcessor implements BeanPostProcessor {
 

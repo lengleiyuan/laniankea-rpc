@@ -1,8 +1,8 @@
 package com.laniakea.core;
 
 /**
- * @author wb-lgc489196
- * @version MessageRequest.java, v 0.1 2019年05月30日 12:21 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageRequest.java, v 0.1 2019年05月30日 12:21 luochang Exp
  */
 import java.io.Serializable;
 

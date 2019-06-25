@@ -3,8 +3,8 @@ package com.laniakea.core;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
- * @author wb-lgc489196
- * @version MessageClientHandler.java, v 0.1 2019年05月30日 12:15 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageClientHandler.java, v 0.1 2019年05月30日 12:15 luochang Exp
  */
 public class MessageClientHandler extends AbstractMassgeContextWrapper {
 

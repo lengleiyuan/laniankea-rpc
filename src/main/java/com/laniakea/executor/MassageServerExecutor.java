@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 import static com.laniakea.config.KearpcConstants.THREAD_NAME;
 
 /**
- * @author wb-lgc489196
- * @version kearpcServerExecutor.java, v 0.1 2019年05月29日 16:06 wb-lgc489196 Exp
+ * @author luochang
+ * @version kearpcServerExecutor.java, v 0.1 2019年05月29日 16:06 luochang Exp
  */
 public class MassageServerExecutor extends AbtractMassgeExecutor {
 

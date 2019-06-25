@@ -2,8 +2,8 @@ package com.laniakea.config;
 
 
 /**
- * @author wb-lgc489196
- * @version ClientProperties.java, v 0.1 2019年05月30日 18:27 wb-lgc489196 Exp
+ * @author luochang
+ * @version ClientProperties.java, v 0.1 2019年05月30日 18:27 luochang Exp
  */
 public class ClientProxy {
 

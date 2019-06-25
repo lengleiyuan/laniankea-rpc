@@ -8,8 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
 /**
- * @author wb-lgc489196
- * @version SemaphoreCache.java, v 0.1 2019年06月21日 14:31 wb-lgc489196 Exp
+ * @author luochang
+ * @version SemaphoreCache.java, v 0.1 2019年06月21日 14:31 luochang Exp
  */
 public class SemaphoreCache {
 

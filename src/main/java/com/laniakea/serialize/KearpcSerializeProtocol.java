@@ -4,8 +4,8 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * @author wb-lgc489196
- * @version kearpcSerializeProtocol.java, v 0.1 2019年05月29日 16:38 wb-lgc489196 Exp
+ * @author luochang
+ * @version kearpcSerializeProtocol.java, v 0.1 2019年05月29日 16:38 luochang Exp
  */
 public enum KearpcSerializeProtocol {
 

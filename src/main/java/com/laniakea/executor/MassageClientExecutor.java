@@ -16,8 +16,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author wb-lgc489196
- * @version MassgeClientExecutor.java, v 0.1 2019年05月30日 11:03 wb-lgc489196 Exp
+ * @author luochang
+ * @version MassgeClientExecutor.java, v 0.1 2019年05月30日 11:03 luochang Exp
  */
 public class MassageClientExecutor extends AbtractMassgeExecutor {
 

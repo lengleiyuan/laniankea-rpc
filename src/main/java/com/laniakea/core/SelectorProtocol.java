@@ -16,8 +16,8 @@ import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
 /**
- * @author wb-lgc489196
- * @version SelectorSerializeProtocol.java, v 0.1 2019年06月18日 17:05 wb-lgc489196 Exp
+ * @author luochang
+ * @version SelectorSerializeProtocol.java, v 0.1 2019年06月18日 17:05 luochang Exp
  */
 public class SelectorProtocol {
 

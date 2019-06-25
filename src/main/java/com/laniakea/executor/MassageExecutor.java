@@ -1,8 +1,8 @@
 package com.laniakea.executor;
 
 /**
- * @author wb-lgc489196
- * @version MassageExecutor.java, v 0.1 2019年06月20日 16:16 wb-lgc489196 Exp
+ * @author luochang
+ * @version MassageExecutor.java, v 0.1 2019年06月20日 16:16 luochang Exp
  */
 public interface MassageExecutor {
 

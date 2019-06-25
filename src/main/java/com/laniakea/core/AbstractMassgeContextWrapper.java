@@ -5,8 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author wb-lgc489196
- * @version MassgeContextWrapper.java, v 0.1 2019年05月30日 14:13 wb-lgc489196 Exp
+ * @author luochang
+ * @version MassgeContextWrapper.java, v 0.1 2019年05月30日 14:13 luochang Exp
  */
 @ChannelHandler.Sharable
 public abstract class AbstractMassgeContextWrapper extends ChannelInboundHandlerAdapter {

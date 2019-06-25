@@ -13,8 +13,8 @@ import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * @author wb-lgc489196
- * @version PushController.java, v 0.1 2019年06月21日 18:20 wb-lgc489196 Exp
+ * @author luochang
+ * @version PushController.java, v 0.1 2019年06月21日 18:20 luochang Exp
  */
 public class PushController {
 

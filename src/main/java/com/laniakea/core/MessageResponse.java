@@ -6,8 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import java.io.Serializable;
 
 /**
- * @author wb-lgc489196
- * @version MessageResponse.java, v 0.1 2019年05月30日 12:22 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageResponse.java, v 0.1 2019年05月30日 12:22 luochang Exp
  */
 public class MessageResponse<T> implements Serializable {
 

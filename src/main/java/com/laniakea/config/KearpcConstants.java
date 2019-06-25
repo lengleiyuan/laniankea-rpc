@@ -3,8 +3,8 @@ package com.laniakea.config;
 import org.springframework.util.StringUtils;
 
 /**
- * @author wb-lgc489196
- * @version KearpcConstants.java, v 0.1 2019年06月04日 09:40 wb-lgc489196 Exp
+ * @author luochang
+ * @version KearpcConstants.java, v 0.1 2019年06月04日 09:40 luochang Exp
  */
 public interface KearpcConstants {
 

@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author wb-lgc489196
- * @version MessageDecoder.java, v 0.1 2019年05月30日 13:39 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageDecoder.java, v 0.1 2019年05月30日 13:39 luochang Exp
  */
 public class MessageDecoder extends ByteToMessageDecoder {
 

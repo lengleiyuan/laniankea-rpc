@@ -7,8 +7,8 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
- * @author wb-lgc489196
- * @version ServerCondition.java, v 0.1 2019年05月31日 14:47 wb-lgc489196 Exp
+ * @author luochang
+ * @version ServerCondition.java, v 0.1 2019年05月31日 14:47 luochang Exp
  */
 public class ServerCondition implements Condition {
     @Override

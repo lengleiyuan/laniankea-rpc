@@ -5,8 +5,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
 /**
- * @author wb-lgc489196
- * @version MessageEncoder.java, v 0.1 2019年05月30日 13:38 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageEncoder.java, v 0.1 2019年05月30日 13:38 luochang Exp
  */
 public class MessageEncoder extends MessageToByteEncoder<Object> {
 

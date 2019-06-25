@@ -11,8 +11,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @author wb-lgc489196
- * @version MessageCallBack.java, v 0.1 2019年05月30日 12:19 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageCallBack.java, v 0.1 2019年05月30日 12:19 luochang Exp
  */
 public class MessageCallBack<T> {
 

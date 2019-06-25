@@ -4,8 +4,8 @@ import com.laniakea.serialize.KearpcSerializeProtocol;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author wb-lgc489196
- * @version KearpcServerProperties.java, v 0.1 2019年05月29日 15:12 wb-lgc489196 Exp
+ * @author luochang
+ * @version KearpcServerProperties.java, v 0.1 2019年05月29日 15:12 luochang Exp
  */
 
 @ConfigurationProperties("com.laniakea.rpc")

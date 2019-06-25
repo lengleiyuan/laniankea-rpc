@@ -7,8 +7,8 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @author wb-lgc489196
- * @version AbortPolicyWithReport.java, v 0.1 2019年05月30日 12:07 wb-lgc489196 Exp
+ * @author luochang
+ * @version AbortPolicyWithReport.java, v 0.1 2019年05月30日 12:07 luochang Exp
  */
 public class AbortPolicyWithReport extends ThreadPoolExecutor.AbortPolicy {
 

@@ -5,8 +5,8 @@ import io.netty.buffer.ByteBuf;
 import java.io.IOException;
 
 /**
- * @author wb-lgc489196
- * @version MessageCodecKit.java, v 0.1 2019年05月30日 12:51 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageCodecKit.java, v 0.1 2019年05月30日 12:51 luochang Exp
  */
 public interface MessageCodecKit {
 

@@ -5,8 +5,8 @@ import com.laniakea.parallel.KearpcThreadPool;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @author wb-lgc489196
- * @version AbtractMassgeExecutor.java, v 0.1 2019年05月30日 11:52 wb-lgc489196 Exp
+ * @author luochang
+ * @version AbtractMassgeExecutor.java, v 0.1 2019年05月30日 11:52 luochang Exp
  */
 public abstract class AbtractMassgeExecutor implements MassageExecutor {
 

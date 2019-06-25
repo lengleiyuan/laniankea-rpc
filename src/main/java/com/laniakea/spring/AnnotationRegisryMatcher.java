@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
- * @author wb-lgc489196
- * @version kearpcPostProcessor.java, v 0.1 2019年05月28日 18:47 wb-lgc489196 Exp
+ * @author luochang
+ * @version kearpcPostProcessor.java, v 0.1 2019年05月28日 18:47 luochang Exp
  */
 public final class AnnotationRegisryMatcher {
 

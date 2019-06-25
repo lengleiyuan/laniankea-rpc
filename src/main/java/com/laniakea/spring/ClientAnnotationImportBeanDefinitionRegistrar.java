@@ -20,8 +20,8 @@ import static com.laniakea.config.KearpcConstants.APPLICATION_PROPERTIES;
 import static com.laniakea.config.KearpcConstants.defaulscan;
 
 /**
- * @author wb-lgc489196
- * @version ClientAnnotationImportBeanDefinitionRegistrar.java, v 0.1 2019年06月21日 18:32 wb-lgc489196 Exp
+ * @author luochang
+ * @version ClientAnnotationImportBeanDefinitionRegistrar.java, v 0.1 2019年06月21日 18:32 luochang Exp
  */
 @Conditional(ClientCondition.class)
 public class ClientAnnotationImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {

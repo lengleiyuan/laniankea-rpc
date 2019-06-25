@@ -11,8 +11,8 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 /**
- * @author wb-lgc489196
- * @version PushController.java, v 0.1 2019年06月20日 10:31 wb-lgc489196 Exp
+ * @author luochang
+ * @version PushController.java, v 0.1 2019年06月20日 10:31 luochang Exp
  */
 public class PullController<T> implements InvocationHandler {
 

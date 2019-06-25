@@ -21,8 +21,8 @@ import java.util.Set;
 import static com.laniakea.config.KearpcConstants.*;
 
 /**
- * @author wb-lgc489196
- * @version ReferenceCandidateComponentScanner.java, v 0.1 2019年06月20日 14:53 wb-lgc489196 Exp
+ * @author luochang
+ * @version ReferenceCandidateComponentScanner.java, v 0.1 2019年06月20日 14:53 luochang Exp
  */
 public class ReferenceCandidateComponentScanner  extends ClassPathScanningCandidateComponentProvider {
 
