@@ -97,8 +97,6 @@ public static void main(String[] args) throws Exception {
         }
 	
         int parallel = 10000;
-
-        sw.start();
         long start = System.currentTimeMillis();
 
 
