@@ -18,6 +18,13 @@ jdk 1.8
 ## 使用教程 ##
 
 **客户端**
+
+application.properties配置
+
+com.laniakea.rpc.port=1993
+com.laniakea.rpc.ip=127.0.0.1
+com.laniakea.rpc.protocol=KRYOSERIALIZE
+
 ```
 @SpringBootApplication
 @KearpcClient
