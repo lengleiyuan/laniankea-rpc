@@ -4,9 +4,7 @@
 
 ## 流程 ##
 
-![Image text](https://github.com/lengleiyuan/laniankea-rpc/blob/master/A05DA856-8BEC-4947-BD39-F0D22FCE2351.png)
-
-![Image text](https://github.com/lengleiyuan/laniankea-rpc/blob/master/4A1756FC-1AC8-4da9-B997-7BC22D7DA7B4.png)
+![Image text](https://github.com/lengleiyuan/laniankea-rpc/blob/master/process.png)
 
 
 ## 环境 ##
