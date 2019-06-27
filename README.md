@@ -34,7 +34,7 @@ public class ClientApplication {
 
 ```
 com.laniakea.rpc.address=127.0.0.1:10086
-com.laniakea.rpc.protocol=KRYOSERIALIZE
+com.laniakea.rpc.protocol=PROTOSTUFFSERIALIZE
 ```
 
 ```
