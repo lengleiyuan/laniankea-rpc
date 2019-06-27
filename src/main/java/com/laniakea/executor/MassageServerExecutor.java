@@ -1,5 +1,6 @@
 package com.laniakea.executor;
 
+import com.laniakea.config.KearpcConstants;
 import com.laniakea.config.KearpcProperties;
 import com.laniakea.core.MessageServerHandler;
 import com.laniakea.core.SerializeChannelInitializer;
@@ -14,7 +15,6 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.nio.channels.spi.SelectorProvider;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -35,10 +35,16 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
 
     public volatile static MassageServerExecutor ME = MassageServerExecutor.getInstance();
 
-    private KearpcProperties properties;
+    private volatile KearpcProperties properties;
+
+    private volatile String ip;
+
+    private volatile Integer port;
 
     public MassageServerExecutor setProperties(KearpcProperties properties) {
         this.properties = properties;
+        this.ip = KearpcConstants.ip(properties.getAddress());
+        this.port = Integer.valueOf(KearpcConstants.port(properties.getAddress()));
         return this;
     }
 
@@ -55,13 +61,13 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
 
     private void logger(Void v) {
         if (logger.isInfoEnabled()) {
-            logger.info("\n Server start success!\n ip: {} \n port: {} \n protocol: {} \n", properties.getIp(),
-                    properties.getPort(), properties.getProtocol());
+            logger.info("\n Server start success!\n ip: {} \n port: {} \n protocol: {} \n", ip,
+                  port, properties.getProtocol());
         }
     }
 
     public void start() {
-        CompletableFuture.runAsync(new ServerInitializeTask(properties), threadPoolExecutor).thenAccept(this::logger);
+        CompletableFuture.runAsync(new ServerInitializeTask(), threadPoolExecutor).thenAccept(this::logger);
     }
 
     public void close() {
@@ -72,11 +78,7 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
 
     class ServerInitializeTask implements Runnable {
 
-        private KearpcProperties properties;
 
-        public ServerInitializeTask (KearpcProperties properties) {
-            this.properties = properties;
-        }
 
         public void run() {
 
@@ -95,7 +97,7 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
                         .buildSerialize(properties.getProtocol())
                         .buildHandle(new MessageServerHandler()));
 
-                ChannelFuture channelFuture = b.bind(properties.getIp(), properties.getPort()).sync();
+                ChannelFuture channelFuture = b.bind(ip, port).sync();
 
                 channelFuture.addListener((listener) -> channelFuture.addListener((ChannelFuture cx) -> {
                     if (cx.isSuccess()) {
@@ -104,8 +106,8 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
                         }
                     } else {
                         if (logger.isInfoEnabled()) {
-                            logger.info("channel is down,start to reconnecting to:" + properties.getIp() + ':'
-                                    + properties.getPort());
+                            logger.info("channel is down,start to reconnecting to:" + ip + ':'
+                                    + port);
                         }
                         boss.schedule(this, 10, TimeUnit.SECONDS);
                     }

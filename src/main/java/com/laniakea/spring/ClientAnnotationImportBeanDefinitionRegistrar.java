@@ -26,16 +26,10 @@ import static com.laniakea.config.KearpcConstants.defaulscan;
 @Conditional(ClientCondition.class)
 public class ClientAnnotationImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
     @Override
-    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry){
 
-        Properties properties;
-        try {
-            properties = PropertiesLoaderUtils.loadAllProperties(APPLICATION_PROPERTIES);
-        } catch (IOException e) {
-            properties = new Properties();
-        }
 
-        ReferenceCandidateComponentScanner scanner = new ReferenceCandidateComponentScanner(true,properties);
+        ReferenceCandidateComponentScanner scanner = new ReferenceCandidateComponentScanner(true);
 
         AnnotationMetadata metadata = AnnotationRegisryMatcher
                 .registryfindAnnotationMetadata(registry, ComponentScan.class.getName());

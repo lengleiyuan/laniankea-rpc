@@ -1,5 +1,6 @@
 package com.laniakea.config;
 
+import com.laniakea.exection.KearpcException;
 import org.springframework.util.StringUtils;
 
 /**
@@ -12,15 +13,7 @@ public interface KearpcConstants {
 
     String PROTOCOL = "protocol";
 
-    String DEFUALT_IP = "127.0.0.1";
-
-    String DEFUALT_PORT = "18888";
-
-    String DEFUALT_IP_NAME = "com.laniakea.rpc.ip";
-
-    String DEFUALT_PORT_NAME = "com.laniakea.rpc.port";
-
-    String PACKGE_INTERFACENAME = "value";
+    String ADDRESS = "address";
 
     String THREAD_NAME = "KearpcThreadFactory";
 
@@ -50,5 +43,29 @@ public interface KearpcConstants {
     static String defaulscan(String fqClassName){
         int lastDotIndex = fqClassName.indexOf(".");
         return (lastDotIndex != -1 ? fqClassName.substring(0, lastDotIndex).concat(".").concat("**") : "");
+    }
+
+    static String ip(String address){
+        String[] addressArray = address.split("\\:");
+        if(addressArray.length != 2){
+            try {
+                throw new KearpcException("Please fill in the correct address.");
+            } catch (KearpcException e) {
+                e.printStackTrace();
+            }
+        }
+        return addressArray[0];
+    }
+
+    static String port(String address) {
+        String[] addressArray = address.split("\\:");
+        if(addressArray.length != 2){
+            try {
+                throw new KearpcException("Please fill in the correct address.");
+            } catch (KearpcException e) {
+                e.printStackTrace();
+            }
+        }
+        return addressArray[1];
     }
 }

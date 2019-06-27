@@ -11,9 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("com.laniakea.rpc")
 public class KearpcProperties {
 
-    private String ip;
-
-    private Integer port;
+    private String address;
 
     private KearpcSerializeProtocol protocol;
 
@@ -25,19 +23,12 @@ public class KearpcProperties {
         this.protocol = protocol;
     }
 
-    public String getIp() {
-        return ip;
+    public String getAddress() {
+        return address;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Integer getPort() {
-        return port;
-    }
-
-    public void setPort(Integer port) {
-        this.port = port;
-    }
 }

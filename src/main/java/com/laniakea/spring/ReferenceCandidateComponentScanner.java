@@ -3,6 +3,7 @@ package com.laniakea.spring;
 import com.laniakea.config.ClientProxy;
 import com.laniakea.annotation.KearpcReference;
 import com.laniakea.core.SemaphoreCache;
+import com.laniakea.exection.KearpcException;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -15,7 +16,6 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.Set;
 
 import static com.laniakea.config.KearpcConstants.*;
@@ -26,11 +26,9 @@ import static com.laniakea.config.KearpcConstants.*;
  */
 public class ReferenceCandidateComponentScanner  extends ClassPathScanningCandidateComponentProvider {
 
-    private Properties properties;
 
-    public ReferenceCandidateComponentScanner(boolean useDefaultFilters,Properties properties) {
+    public ReferenceCandidateComponentScanner(boolean useDefaultFilters) {
         super(useDefaultFilters);
-        this.properties = properties;
     }
     @Override
     public void registerDefaultFilters() {
@@ -52,20 +50,19 @@ public class ReferenceCandidateComponentScanner  extends ClassPathScanningCandid
 
                 String protocol = attributes.getString(PROTOCOL);
                 String interfaceName = attributes.getString(INTERFACENAME);
+                String address = attributes.getString(ADDRESS);
 
                 BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(definition.getBeanClassName());
                 GenericBeanDefinition genericBeanDefinition = (GenericBeanDefinition) builder.getRawBeanDefinition();
 
                 ClientProxy clientProxy = new ClientProxy(interfaceName, definition.getBeanClassName(),
-                        properties.getProperty(DEFUALT_IP_NAME, DEFUALT_IP),
-                        Integer.valueOf(properties.getProperty(DEFUALT_PORT_NAME, DEFUALT_PORT)),
-                        protocol);
-
+                       ip(address),Integer.valueOf(port(address)),protocol);
                 SemaphoreCache.getCache().init(definition.getBeanClassName());
                 genericBeanDefinition.getPropertyValues().addPropertyValue(PROXYPROPERTIES,clientProxy);
                 genericBeanDefinition.setBeanClass(ReferenceInitializeFactory.class);
                 genericBeanDefinition.setAutowireMode(RootBeanDefinition.AUTOWIRE_BY_TYPE);
                 registry.registerBeanDefinition(simpleClassName(definition.getBeanClassName()), genericBeanDefinition);
+
             }
         }
     }

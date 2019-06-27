@@ -16,6 +16,8 @@ import java.lang.annotation.*;
 public @interface KearpcReference {
 
 
+    String address();
+
     String interfaceName();
 
     String protocol() default KearpcConstants.PROTOSTUFFSERIALIZE;
