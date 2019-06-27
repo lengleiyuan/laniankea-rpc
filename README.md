@@ -33,8 +33,7 @@ public class ClientApplication {
 **服务端**
 
 ```
-com.laniakea.rpc.port=xxxx
-com.laniakea.rpc.ip=127.0.0.1
+com.laniakea.rpc.address=127.0.0.1:10086
 com.laniakea.rpc.protocol=KRYOSERIALIZE
 ```
 
@@ -62,7 +61,7 @@ public class Remoteinterface{
 
 **本地接口**
 ```
-@KearpcReference(interface="Remoteinterface",protocol="PROTOSTUFFSERIALIZE")
+@KearpcReference(address = "127.0.0.1:10086",interface="xxx.xxx.Remoteinterface",protocol="PROTOSTUFFSERIALIZE")
 public interface Nativeinterface{
 
     public int add(int i,int b)
