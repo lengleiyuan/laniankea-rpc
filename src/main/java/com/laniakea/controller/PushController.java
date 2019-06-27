@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class PushController {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(PushController.class);
 
     private MessageRequest request;
 
@@ -34,7 +34,15 @@ public class PushController {
         response.setMessageId(request.getMessageId());
         String className = request.getClassName();
         Object serviceBean = MessageCache.getCache().getHandler(className);
+        if(null == serviceBean){
+            throw new KearpcException("[Reference.interfaceName] not corresponding to @KearpcService");
+        }
         Method method = ReflectionUtils.findMethod(serviceBean.getClass(), request.getMethodName(), request.getTypeParameters());
+        if(null == method){
+            throw new KearpcException(
+                    "This method was not found to Server.class = " + serviceBean.getClass() + "method = " + request.getMethodName()
+                            + "typeParameters = " + request.getTypeParameters());
+        }
         Object result = ReflectionUtils.invokeMethod(method, serviceBean, request.getParameters());
         response.setResult(result);
         return response;

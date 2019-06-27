@@ -11,10 +11,10 @@ import org.springframework.beans.factory.InitializingBean;
 public class RegistryInitialize implements InitializingBean, DisposableBean {
 
 
-    private KearpcProperties kearpcProperties;
+    private KearpcProperties properties;
 
-    public void setKearpcProperties(KearpcProperties kearpcProperties) {
-        this.kearpcProperties = kearpcProperties;
+    public void setKearpcProperties(KearpcProperties properties) {
+        this.properties = properties;
     }
 
 
@@ -25,6 +25,6 @@ public class RegistryInitialize implements InitializingBean, DisposableBean {
 
     @Override
     public void afterPropertiesSet()  {
-        MassageServerExecutor.ME.setProperties(kearpcProperties).start();
+        MassageServerExecutor.init(properties).start();
     }
 }

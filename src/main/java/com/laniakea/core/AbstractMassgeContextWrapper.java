@@ -1,8 +1,6 @@
 package com.laniakea.core;
 
 import io.netty.channel.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author luochang
@@ -11,15 +9,12 @@ import org.slf4j.LoggerFactory;
 @ChannelHandler.Sharable
 public abstract class AbstractMassgeContextWrapper extends ChannelInboundHandlerAdapter {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
 
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
     }
 
-    public void channelRead(ChannelHandlerContext ctx, Object msg)
-            throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg){
         handleMessage(ctx,msg);
     }
 

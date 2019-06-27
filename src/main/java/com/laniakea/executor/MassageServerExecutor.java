@@ -5,6 +5,7 @@ import com.laniakea.config.KearpcProperties;
 import com.laniakea.core.MessageServerHandler;
 import com.laniakea.core.SerializeChannelInitializer;
 import com.laniakea.parallel.NamedThreadFactory;
+import com.laniakea.serialize.KearpcSerializeProtocol;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -33,26 +34,25 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
 
     EventLoopGroup worker = new NioEventLoopGroup(parallel, new NamedThreadFactory(THREAD_NAME), SelectorProvider.provider());
 
-    public volatile static MassageServerExecutor ME = MassageServerExecutor.getInstance();
+    public volatile static MassageServerExecutor ME;
 
-    private volatile KearpcProperties properties;
+    private final String ip;
 
-    private volatile String ip;
+    private final Integer port;
 
-    private volatile Integer port;
+    private final KearpcSerializeProtocol protocol;
 
-    public MassageServerExecutor setProperties(KearpcProperties properties) {
-        this.properties = properties;
+    public MassageServerExecutor(final KearpcProperties properties){
         this.ip = KearpcConstants.ip(properties.getAddress());
         this.port = Integer.valueOf(KearpcConstants.port(properties.getAddress()));
-        return this;
+        this.protocol = properties.getProtocol();
     }
 
-    public static MassageServerExecutor getInstance() {
+    public static MassageServerExecutor init(KearpcProperties properties) {
         if (null == ME) {
             synchronized (MassageServerExecutor.class) {
                 if (null == ME) {
-                    ME = new MassageServerExecutor();
+                    ME = new MassageServerExecutor(properties);
                 }
             }
         }
@@ -62,7 +62,7 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
     private void logger(Void v) {
         if (logger.isInfoEnabled()) {
             logger.info("\n Server start success!\n ip: {} \n port: {} \n protocol: {} \n", ip,
-                  port, properties.getProtocol());
+                  port, protocol);
         }
     }
 
@@ -78,8 +78,6 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
 
     class ServerInitializeTask implements Runnable {
 
-
-
         public void run() {
 
             try {
@@ -94,7 +92,7 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
                 b.handler(new LoggingHandler(LogLevel.INFO));
 
                 b.childHandler(new SerializeChannelInitializer()
-                        .buildSerialize(properties.getProtocol())
+                        .buildSerialize(protocol)
                         .buildHandle(new MessageServerHandler()));
 
                 ChannelFuture channelFuture = b.bind(ip, port).sync();

@@ -66,7 +66,7 @@ public class MassageClientExecutor extends AbtractMassgeExecutor {
 
     public void start() {
 
-        CompletableFuture.runAsync(new ClientInitializeTask(proxy),threadPoolExecutor)
+        CompletableFuture.runAsync(new ClientInitializeTask(proxy),MassageClientExecutor.ME.threadPoolExecutor)
                 .thenAccept(this::logger);
 
     }

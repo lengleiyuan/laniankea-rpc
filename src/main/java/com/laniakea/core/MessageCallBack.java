@@ -39,15 +39,12 @@ public class MessageCallBack<T> {
                 if(this.response.getError() == null){
                     return (T) this.response.getResult();
                 }else{
-                    if(this.response.getError() != null){
-                        channel.close();
-                        throw new KearpcException(this.response.getError());
-                    }
-                    return null;
+                    channel.close();
+                    throw new KearpcException(this.response.getError());
                 }
             } else {
                 logger.error("task is overtime than {} milliseconds", WAITIMES);
-                throw new KearpcException();
+                throw new KearpcException("task is overtime");
             }
         } finally {
             lock.unlock();
