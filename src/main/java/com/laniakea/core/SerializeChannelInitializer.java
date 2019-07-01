@@ -13,13 +13,13 @@ public class SerializeChannelInitializer extends ChannelInitializer {
 
     private KearpcSerializeProtocol protocol;
 
-    private AbstractMassgeContextWrapper wrapper;
+    private AbstractMassgeHandleWrapper wrapper;
 
     public SerializeChannelInitializer buildSerialize(KearpcSerializeProtocol protocol) {
         this.protocol = protocol;
         return this;
     }
-    public SerializeChannelInitializer buildHandle(AbstractMassgeContextWrapper wrapper){
+    public SerializeChannelInitializer buildHandle(AbstractMassgeHandleWrapper wrapper){
         this.wrapper = wrapper;
         return this;
     }

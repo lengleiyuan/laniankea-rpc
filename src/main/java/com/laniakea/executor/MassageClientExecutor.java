@@ -48,7 +48,7 @@ public class MassageClientExecutor extends AbtractMassgeExecutor {
 
 
 
-    public <T> T execute(Class<T> rpcInterface) {
+    public <T> T create(Class<T> rpcInterface) {
         String key = rpcInterface.getName();
         SemaphoreCache.getCache().acquire(key);
         return (T) Proxy.newProxyInstance(rpcInterface.getClassLoader(),

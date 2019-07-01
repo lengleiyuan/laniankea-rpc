@@ -6,7 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
  * @author luochang
  * @version MessageClientHandler.java, v 0.1 2019年05月30日 12:15 luochang Exp
  */
-public class MessageClientHandler extends AbstractMassgeContextWrapper {
+public class MessageClientHandler extends AbstractMassgeHandleWrapper {
 
 
     @Override

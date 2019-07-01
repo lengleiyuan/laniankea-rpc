@@ -1,7 +1,9 @@
 package com.laniakea.core;
 
 import com.laniakea.exection.KearpcException;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +33,7 @@ public class MessageCallBack<T> {
     }
 
 
-    public T execute() throws Throwable {
+    public T create() throws Throwable {
         try {
             lock.lock();
             finish.await(WAITIMES, TimeUnit.MILLISECONDS);
@@ -39,7 +41,7 @@ public class MessageCallBack<T> {
                 if(this.response.getError() == null){
                     return (T) this.response.getResult();
                 }else{
-                    channel.close();
+                    channel.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
                     throw new KearpcException(this.response.getError());
                 }
             } else {

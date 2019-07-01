@@ -48,7 +48,7 @@ public class SelectorProtocol {
         return pipeline;
     }
 
-    private ChannelPipeline ProtostuffChannel(ChannelPipeline pipeline,AbstractMassgeContextWrapper wrapper) {
+    private ChannelPipeline ProtostuffChannel(ChannelPipeline pipeline, AbstractMassgeHandleWrapper wrapper) {
         ProtostuffCodecKit kit = new ProtostuffCodecKit();
         if(wrapper instanceof MessageClientHandler){
             kit.setGenericClass(MessageResponse.class);
@@ -60,7 +60,7 @@ public class SelectorProtocol {
         pipeline.addLast(new MessageDecoder(kit));
         return pipeline;
     }
-    public ChannelPipeline selectSerialize(KearpcSerializeProtocol protocol,AbstractMassgeContextWrapper wrapper){
+    public ChannelPipeline selectSerialize(KearpcSerializeProtocol protocol, AbstractMassgeHandleWrapper wrapper){
 
         switch (protocol) {
 

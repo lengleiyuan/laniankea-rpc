@@ -38,7 +38,7 @@ public class PullController<T> implements InvocationHandler {
         MessageCallBack callBack = new MessageCallBack(channel);
         MessageCache.getCache().putMassgeCallBack(request.getMessageId(), callBack);
         channel.writeAndFlush(request);
-        return (T) callBack.execute();
+        return (T) callBack.create();
     }
 
 }

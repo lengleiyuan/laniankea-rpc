@@ -1,7 +1,6 @@
 package com.laniakea.spring;
 
 import com.laniakea.config.ClientProxy;
-import com.laniakea.exection.KearpcException;
 import com.laniakea.executor.MassageClientExecutor;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
@@ -28,7 +27,7 @@ public class ReferenceInitializeFactory implements FactoryBean, InitializingBean
 
     @Override
     public Object getObject() {
-        return MassageClientExecutor.ME.execute(getObjectType());
+        return MassageClientExecutor.ME.create(getObjectType());
     }
 
     @Override
