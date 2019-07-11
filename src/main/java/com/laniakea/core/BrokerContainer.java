@@ -1,10 +1,9 @@
-package com.laniakea.spring;
+package com.laniakea.core;
 import com.laniakea.cache.MessageCache;
 import com.laniakea.cache.ReferenceCache;
 import com.laniakea.cache.SemaphoreCache;
 import com.laniakea.cache.ServiceCache;
 import com.laniakea.config.KearpcProperties;
-import com.laniakea.core.Switch;
 import com.laniakea.executor.MassageClientExecutor;
 import com.laniakea.executor.MassageServerExecutor;
 

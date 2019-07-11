@@ -1,12 +1,14 @@
 package com.laniakea.spring;
 
 import com.laniakea.config.KearpcProperties;
+import com.laniakea.core.BrokerContainer;
 import com.laniakea.registry.Registry;
+import com.laniakea.registry.RegistryContainer;
 import org.springframework.context.ApplicationListener;
 
 /**
- * @author wb-lgc489196
- * @version KearpcStartListener.java, v 0.1 2019年07月09日 15:23 wb-lgc489196 Exp
+ * @author luochang
+ * @version KearpcStartListener.java, v 0.1 2019年07月09日 15:23 luochang Exp
  */
 public class KearpcStartListener implements ApplicationListener<KearpcBootEvent> {
 

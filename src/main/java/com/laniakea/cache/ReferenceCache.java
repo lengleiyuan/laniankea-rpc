@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author wb-lgc489196
- * @version ReferenceCache.java, v 0.1 2019年07月08日 14:27 wb-lgc489196 Exp
+ * @author luochang
+ * @version ReferenceCache.java, v 0.1 2019年07月08日 14:27 luochang Exp
  */
 public class ReferenceCache {
 

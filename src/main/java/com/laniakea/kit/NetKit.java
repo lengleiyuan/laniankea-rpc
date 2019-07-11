@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * @author wb-lgc489196
- * @version NetKit.java, v 0.1 2019年07月04日 10:55 wb-lgc489196 Exp
+ * @author luochang
+ * @version NetKit.java, v 0.1 2019年07月04日 10:55 luochang Exp
  */
 public class NetKit {
 

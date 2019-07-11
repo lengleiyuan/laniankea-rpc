@@ -3,8 +3,8 @@ package com.laniakea.registry.zk;
 import com.laniakea.serialize.KearpcSerializeProtocol;
 
 /**
- * @author wb-lgc489196
- * @version Provider.java, v 0.1 2019年07月04日 10:42 wb-lgc489196 Exp
+ * @author luochang
+ * @version Provider.java, v 0.1 2019年07月04日 10:42 luochang Exp
  */
 public class Provider {
 

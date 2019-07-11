@@ -1,5 +1,6 @@
 package com.laniakea.spring;
 
+import com.laniakea.core.BrokerContainer;
 import com.laniakea.registry.Registry;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
@@ -7,8 +8,8 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextStoppedEvent;
 
 /**
- * @author wb-lgc489196
- * @version ApplicationContextClosedListener.java, v 0.1 2019年07月09日 15:46 wb-lgc489196 Exp
+ * @author luochang
+ * @version ApplicationContextClosedListener.java, v 0.1 2019年07月09日 15:46 luochang Exp
  */
 public class ApplicationContextClosedListener implements ApplicationListener {
 

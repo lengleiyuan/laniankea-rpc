@@ -4,6 +4,7 @@ import com.laniakea.annotation.KearpcReference;
 import com.laniakea.annotation.KearpcService;
 import com.laniakea.cache.ReferenceCache;
 import com.laniakea.cache.ServiceCache;
+import com.laniakea.core.AnnotationRegisryMatcher;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.*;

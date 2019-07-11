@@ -6,8 +6,8 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 /**
- * @author wb-lgc489196
- * @version MessageEventAdvisor.java, v 0.1 2019年07月09日 16:25 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageEventAdvisor.java, v 0.1 2019年07月09日 16:25 luochang Exp
  */
 public class MessageEventAdvice<T> implements InvocationHandler {
 

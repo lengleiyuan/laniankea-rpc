@@ -1,4 +1,4 @@
-package com.laniakea.spring;
+package com.laniakea.registry;
 
 import com.laniakea.annotation.KearpcReference;
 import com.laniakea.annotation.KearpcService;
@@ -7,7 +7,6 @@ import com.laniakea.cache.ServiceCache;
 import com.laniakea.config.KearpcProperties;
 import com.laniakea.executor.MassageClientExecutor;
 import com.laniakea.kit.LaniakeaKit;
-import com.laniakea.registry.Registry;
 import com.laniakea.registry.zk.Consumer;
 import com.laniakea.registry.zk.Provider;
 import com.laniakea.serialize.KearpcSerializeProtocol;
@@ -23,8 +22,8 @@ import static com.laniakea.kit.LaniakeaKit.ip;
 import static com.laniakea.kit.LaniakeaKit.port;
 
 /**
- * @author wb-lgc489196
- * @version RegistryContainer.java, v 0.1 2019年07月09日 14:28 wb-lgc489196 Exp
+ * @author luochang
+ * @version RegistryContainer.java, v 0.1 2019年07月09日 14:28 luochang Exp
  */
 public class RegistryContainer  {
 

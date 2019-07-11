@@ -6,8 +6,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 /**
- * @author wb-lgc489196
- * @version ApplicationContextRefreshedListener.java, v 0.1 2019年07月09日 15:20 wb-lgc489196 Exp
+ * @author luochang
+ * @version ApplicationContextRefreshedListener.java, v 0.1 2019年07月09日 15:20 luochang Exp
  */
 public class ApplicationContextRefreshedListener implements ApplicationListener {
     @Override

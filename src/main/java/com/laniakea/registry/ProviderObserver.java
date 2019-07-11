@@ -12,8 +12,8 @@ import java.util.Map;
 import static com.laniakea.kit.LaniakeaKit.*;
 
 /**
- * @author wb-lgc489196
- * @version ProviderObserver.java, v 0.1 2019年07月04日 15:19 wb-lgc489196 Exp
+ * @author luochang
+ * @version ProviderObserver.java, v 0.1 2019年07月04日 15:19 luochang Exp
  */
 public class ProviderObserver {
 

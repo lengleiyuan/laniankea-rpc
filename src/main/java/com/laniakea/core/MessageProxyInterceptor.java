@@ -1,8 +1,8 @@
 package com.laniakea.core;
 
 /**
- * @author wb-lgc489196
- * @version ControllerEventProxy.java, v 0.1 2019年07月09日 16:30 wb-lgc489196 Exp
+ * @author luochang
+ * @version ControllerEventProxy.java, v 0.1 2019年07月09日 16:30 luochang Exp
  */
 public interface MessageProxyInterceptor {
 

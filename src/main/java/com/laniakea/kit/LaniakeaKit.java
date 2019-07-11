@@ -8,8 +8,8 @@ import static com.laniakea.config.KearpcConstants.CUTTER;
 import static com.laniakea.config.KearpcConstants.ETC;
 
 /**
- * @author wb-lgc489196
- * @version LaniakeaKit.java, v 0.1 2019年07月04日 11:03 wb-lgc489196 Exp
+ * @author luochang
+ * @version LaniakeaKit.java, v 0.1 2019年07月04日 11:03 luochang Exp
  */
 public interface LaniakeaKit  {
 

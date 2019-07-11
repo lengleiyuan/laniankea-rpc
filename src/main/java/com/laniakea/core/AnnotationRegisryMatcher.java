@@ -1,4 +1,4 @@
-package com.laniakea.spring;
+package com.laniakea.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

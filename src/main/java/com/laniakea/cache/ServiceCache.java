@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author wb-lgc489196
- * @version ServiceCache.java, v 0.1 2019年07月09日 10:40 wb-lgc489196 Exp
+ * @author luochang
+ * @version ServiceCache.java, v 0.1 2019年07月09日 10:40 luochang Exp
  */
 public class ServiceCache {
 

@@ -1,6 +1,7 @@
 package com.laniakea.spring;
 
 import com.laniakea.annotation.EnableKearpc;
+import com.laniakea.core.AnnotationRegisryMatcher;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;

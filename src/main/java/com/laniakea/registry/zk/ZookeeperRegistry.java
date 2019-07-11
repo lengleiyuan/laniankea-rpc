@@ -26,8 +26,8 @@ import static com.laniakea.config.KearpcConstants.ETC;
 import static com.laniakea.kit.LaniakeaKit.*;
 
 /**
- * @author wb-lgc489196
- * @version ZookeeperRegistry.java, v 0.1 2019年07月04日 15:24 wb-lgc489196 Exp
+ * @author luochang
+ * @version ZookeeperRegistry.java, v 0.1 2019年07月04日 15:24 luochang Exp
  */
 public class ZookeeperRegistry implements Registry {
 

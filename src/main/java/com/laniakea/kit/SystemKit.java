@@ -3,8 +3,8 @@ package com.laniakea.kit;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author wb-lgc489196
- * @version SystemInfo.java, v 0.1 v 0.1 2019年07月04日 11:00 wb-lgc489196 Exp
+ * @author luochang
+ * @version SystemInfo.java, v 0.1 v 0.1 2019年07月04日 11:00 luochang Exp
  */
 public class SystemKit {
 

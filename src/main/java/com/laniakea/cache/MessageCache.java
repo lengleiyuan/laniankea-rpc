@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author wb-lgc489196
- * @version MessageCache.java, v 0.1 2019年07月10日 10:51 wb-lgc489196 Exp
+ * @author luochang
+ * @version MessageCache.java, v 0.1 2019年07月10日 10:51 luochang Exp
  */
 public class MessageCache {
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author wb-lgc489196
- * @version ProvierGroup.java, v 0.1 2019年07月04日 15:23 wb-lgc489196 Exp
+ * @author luochang
+ * @version ProvierGroup.java, v 0.1 2019年07月04日 15:23 luochang Exp
  */
 public class ProviderGroup {
 

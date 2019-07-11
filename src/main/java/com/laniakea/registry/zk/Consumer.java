@@ -5,8 +5,8 @@ import com.laniakea.kit.LaniakeaKit;
 import java.net.InetSocketAddress;
 
 /**
- * @author wb-lgc489196
- * @version Consumer.java, v 0.1 2019年07月04日 15:21 wb-lgc489196 Exp
+ * @author luochang
+ * @version Consumer.java, v 0.1 2019年07月04日 15:21 luochang Exp
  */
 public class Consumer {
 
