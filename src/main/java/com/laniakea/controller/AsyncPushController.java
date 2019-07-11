@@ -1,6 +1,6 @@
 package com.laniakea.controller;
 
-import com.laniakea.core.MessageCache;
+import com.laniakea.cache.MessageCache;
 import com.laniakea.core.MessageRequest;
 import com.laniakea.core.MessageResponse;
 import com.laniakea.exection.KearpcException;
@@ -9,6 +9,7 @@ import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
+
 import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;
 
@@ -16,15 +17,15 @@ import java.util.concurrent.CompletableFuture;
  * @author luochang
  * @version PushController.java, v 0.1 2019年06月21日 18:20 luochang Exp
  */
-public class PushController {
+public class AsyncPushController {
 
-    private Logger logger = LoggerFactory.getLogger(PushController.class);
+    private Logger logger = LoggerFactory.getLogger(AsyncPushController.class);
 
     private MessageRequest request;
 
     private ChannelHandlerContext ctx;
 
-    public PushController(MessageRequest request, ChannelHandlerContext ctx) {
+    public AsyncPushController(MessageRequest request, ChannelHandlerContext ctx) {
         this.request = request;
         this.ctx = ctx;
     }
@@ -33,7 +34,7 @@ public class PushController {
         MessageResponse response = new MessageResponse();
         response.setMessageId(request.getMessageId());
         String className = request.getClassName();
-        Object serviceBean = MessageCache.getCache().getHandler(className);
+        Object serviceBean = MessageCache.getCache().get(className);
         if(null == serviceBean){
             throw new KearpcException("[Reference.interfaceName] not corresponding to @KearpcService");
         }

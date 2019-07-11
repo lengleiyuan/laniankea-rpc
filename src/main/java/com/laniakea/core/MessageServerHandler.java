@@ -1,6 +1,6 @@
 package com.laniakea.core;
 
-import com.laniakea.controller.PushController;
+import com.laniakea.controller.AsyncPushController;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -10,11 +10,10 @@ import io.netty.channel.ChannelHandlerContext;
 public class MessageServerHandler extends AbstractMassgeHandleWrapper {
 
 
-
     @Override
     public void handleMessage(ChannelHandlerContext ctx, Object msg) {
         MessageRequest request = (MessageRequest) msg;
-        PushController push = new PushController(request,ctx);
+        AsyncPushController push = new AsyncPushController(request,ctx);
         push.writeAndFlush();
     }
 

@@ -23,7 +23,7 @@ public enum KearpcSerializeProtocol {
         return ReflectionToStringBuilder.toString(this);
     }
 
-    public String getProtocol() {
+    public String getStr() {
         return serializeProtocol;
     }
 }

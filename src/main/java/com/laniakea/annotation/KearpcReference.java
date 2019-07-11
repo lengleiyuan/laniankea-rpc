@@ -1,7 +1,6 @@
 package com.laniakea.annotation;
 
 
-import com.laniakea.config.KearpcConstants;
 
 import java.lang.annotation.*;
 
@@ -15,12 +14,12 @@ import java.lang.annotation.*;
 @Inherited
 public @interface KearpcReference {
 
+    String uniqueId();
 
-    String address();
+    String protocol() default "PROTOSTUFFSERIALIZE";  //非订阅需要指定点对点连接
 
-    String interfaceName();
+    String address() default ""; //非订阅需要指定点对点连接
 
-    String protocol() default KearpcConstants.PROTOSTUFFSERIALIZE;
-
+    boolean isSubscribe() default true;
 
 }

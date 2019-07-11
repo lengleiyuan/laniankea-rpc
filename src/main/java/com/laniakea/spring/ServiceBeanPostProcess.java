@@ -1,23 +1,17 @@
 package com.laniakea.spring;
 
 import com.laniakea.annotation.KearpcService;
-import com.laniakea.core.MessageCache;
+import com.laniakea.cache.MessageCache;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
- * @author luochang
- * @version ServiceAnnotationPostProcessor.java, v 0.1 2019年05月30日 10:59 luochang Exp
+ * @author wb-lgc489196
+ * @version ServiceBeanPostProcess.java, v 0.1 2019年07月09日 16:12 wb-lgc489196 Exp
  */
-public class ServiceAnnotationPostProcessor implements BeanPostProcessor {
 
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-
-        return bean;
-    }
+public class ServiceBeanPostProcess implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
@@ -30,7 +24,7 @@ public class ServiceAnnotationPostProcessor implements BeanPostProcessor {
             return bean;
         }
 
-        MessageCache.getCache().putHandler(bean.getClass().getName(),bean);
+        MessageCache.getCache().put(bean.getClass().getName(),bean);
 
         return bean;
     }

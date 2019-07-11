@@ -1,5 +1,6 @@
 package com.laniakea.executor;
 
+import com.laniakea.core.Switch;
 import com.laniakea.parallel.KearpcThreadPool;
 
 import java.util.concurrent.ThreadPoolExecutor;
@@ -8,7 +9,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author luochang
  * @version AbtractMassgeExecutor.java, v 0.1 2019年05月30日 11:52 luochang Exp
  */
-public abstract class AbtractMassgeExecutor implements MassageExecutor {
+public abstract class AbtractMassgeExecutor implements Switch {
 
     protected final static int parallel = Runtime.getRuntime().availableProcessors() * 2;
 

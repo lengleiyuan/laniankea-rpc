@@ -1,9 +1,9 @@
 package com.laniakea.executor;
 
-import com.laniakea.config.KearpcConstants;
 import com.laniakea.config.KearpcProperties;
 import com.laniakea.core.MessageServerHandler;
 import com.laniakea.core.SerializeChannelInitializer;
+import com.laniakea.kit.LaniakeaKit;
 import com.laniakea.parallel.NamedThreadFactory;
 import com.laniakea.serialize.KearpcSerializeProtocol;
 import io.netty.bootstrap.ServerBootstrap;
@@ -16,6 +16,7 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.nio.channels.spi.SelectorProvider;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -30,9 +31,11 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
 
     private static Logger logger = LoggerFactory.getLogger(MassageServerExecutor.class);
 
-    EventLoopGroup boss = new NioEventLoopGroup();
+    private EventLoopGroup boss;
 
-    EventLoopGroup worker = new NioEventLoopGroup(parallel, new NamedThreadFactory(THREAD_NAME), SelectorProvider.provider());
+    private EventLoopGroup worker;
+
+    private ServerBootstrap bootstrap;
 
     public volatile static MassageServerExecutor ME;
 
@@ -42,9 +45,10 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
 
     private final KearpcSerializeProtocol protocol;
 
+
     public MassageServerExecutor(final KearpcProperties properties){
-        this.ip = KearpcConstants.ip(properties.getAddress());
-        this.port = Integer.valueOf(KearpcConstants.port(properties.getAddress()));
+        this.ip = LaniakeaKit.ip(properties.getServerAddress());
+        this.port = Integer.valueOf(LaniakeaKit.port(properties.getServerAddress()));
         this.protocol = properties.getProtocol();
     }
 
@@ -59,48 +63,49 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
         return ME;
     }
 
-    private void logger(Void v) {
-        if (logger.isInfoEnabled()) {
-            logger.info("\n Server start success!\n ip: {} \n port: {} \n protocol: {} \n", ip,
-                  port, protocol);
-        }
-    }
 
     public void start() {
-        CompletableFuture.runAsync(new ServerInitializeTask(), threadPoolExecutor).thenAccept(this::logger);
+        CompletableFuture.runAsync(new ServerInitializeTask());
     }
+
 
     public void close() {
         worker.shutdownGracefully();
         boss.shutdownGracefully();
+        MassageClientExecutor.threadPoolExecutor.shutdown();
     }
 
 
     class ServerInitializeTask implements Runnable {
 
+
         public void run() {
 
             try {
-                ServerBootstrap b = new ServerBootstrap();
+                bootstrap = new ServerBootstrap();
 
-                b.group(boss, worker).channel(NioServerSocketChannel.class);
+                boss = new NioEventLoopGroup();
 
-                b.option(ChannelOption.SO_BACKLOG, 1024);
+                worker =  new NioEventLoopGroup(parallel, new NamedThreadFactory(THREAD_NAME), SelectorProvider.provider());
 
-                b.childOption(ChannelOption.SO_KEEPALIVE, true);
+                bootstrap.group(boss, worker).channel(NioServerSocketChannel.class);
 
-                b.handler(new LoggingHandler(LogLevel.INFO));
+                bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
 
-                b.childHandler(new SerializeChannelInitializer()
+                bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
+
+                bootstrap.handler(new LoggingHandler(LogLevel.INFO));
+
+                bootstrap.childHandler(new SerializeChannelInitializer()
                         .buildSerialize(protocol)
                         .buildHandle(new MessageServerHandler()));
 
-                ChannelFuture channelFuture = b.bind(ip, port).sync();
+                ChannelFuture channelFuture = bootstrap.bind(ip, port).sync();
 
                 channelFuture.addListener((listener) -> channelFuture.addListener((ChannelFuture cx) -> {
                     if (cx.isSuccess()) {
                         if (logger.isInfoEnabled()) {
-                            logger.info("channel link successful");
+                            logger.info("channel link successful, serialize: {} ",protocol);
                         }
                     } else {
                         if (logger.isInfoEnabled()) {

@@ -1,7 +1,5 @@
 package com.laniakea.config;
 
-import com.laniakea.exection.KearpcException;
-import org.springframework.util.StringUtils;
 
 /**
  * @author luochang
@@ -27,45 +25,13 @@ public interface KearpcConstants {
 
     String APPLICATION_PROPERTIES ="application.properties";
 
-    String PROXYPROPERTIES = "proxyProperties";
+    String PROXYPROPERTIES = "innerInterfaceName";
+
+    String CUTTER = "/";
+
+    String ETC = "=";
+
+    String SEND_ASYN_MESSAGE = "sendAsynMessage";
 
 
-     static String simpleClassName(String className){
-        if(className.contains(".")){
-            String[] classNameArray = className.split("\\.");
-            String simpleClassNameUp = classNameArray[classNameArray.length - 1];
-            return StringUtils.uncapitalize(simpleClassNameUp);
-        }
-        return className;
-    }
-
-
-    static String defaulscan(String fqClassName){
-        int lastDotIndex = fqClassName.indexOf(".");
-        return (lastDotIndex != -1 ? fqClassName.substring(0, lastDotIndex).concat(".").concat("**") : "");
-    }
-
-    static String ip(String address){
-        String[] addressArray = address.split("\\:");
-        if(addressArray.length != 2){
-            try {
-                throw new KearpcException("Please fill in the correct address.");
-            } catch (KearpcException e) {
-                e.printStackTrace();
-            }
-        }
-        return addressArray[0];
-    }
-
-    static String port(String address) {
-        String[] addressArray = address.split("\\:");
-        if(addressArray.length != 2){
-            try {
-                throw new KearpcException("Please fill in the correct address.");
-            } catch (KearpcException e) {
-                e.printStackTrace();
-            }
-        }
-        return addressArray[1];
-    }
 }

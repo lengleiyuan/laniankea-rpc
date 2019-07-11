@@ -1,5 +1,6 @@
 package com.laniakea.core;
 
+import com.laniakea.cache.CallbackCache;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -13,7 +14,7 @@ public class MessageClientHandler extends AbstractMassgeHandleWrapper {
     public void handleMessage(ChannelHandlerContext ctx, Object msg) {
         MessageResponse response = (MessageResponse) msg;
         String messageId = response.getMessageId();
-        MessageCache cache = MessageCache.getCache();
+        CallbackCache cache = CallbackCache.getCache();
         MessageCallBack callBack = cache.getMassgeCallBack(messageId);
         callBack.finish(response);
         cache.removeCallBack(messageId);
