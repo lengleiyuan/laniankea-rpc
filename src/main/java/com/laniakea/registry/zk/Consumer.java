@@ -10,7 +10,9 @@ import java.net.InetSocketAddress;
  */
 public class Consumer {
 
-    private String uniqueId;
+    private String remoteKey;
+
+    private String nativeKey;
 
     private InetSocketAddress socketAddress =  LaniakeaKit.bulidSocketAddress("0.0.0.0", 12200);
 
@@ -22,11 +24,19 @@ public class Consumer {
         this.socketAddress = socketAddress;
     }
 
-    public String getUniqueId() {
-        return uniqueId;
+    public String getRemoteKey() {
+        return remoteKey;
     }
 
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
+    public void setRemoteKey(String remoteKey) {
+        this.remoteKey = remoteKey;
+    }
+
+    public String getNativeKey() {
+        return nativeKey;
+    }
+
+    public void setNativeKey(String nativeKey) {
+        this.nativeKey = nativeKey;
     }
 }

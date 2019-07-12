@@ -92,7 +92,15 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
 
                 bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
 
+                bootstrap.option(ChannelOption.SO_REUSEADDR, true);
+
                 bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
+
+                bootstrap.childOption(ChannelOption.TCP_NODELAY, true);
+
+                bootstrap.option(ChannelOption.SO_SNDBUF, socketSndbufSize);
+
+                bootstrap.option(ChannelOption.SO_RCVBUF, socketRcvbufSize);
 
                 bootstrap.handler(new LoggingHandler(LogLevel.INFO));
 

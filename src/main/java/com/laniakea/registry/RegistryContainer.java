@@ -2,21 +2,24 @@ package com.laniakea.registry;
 
 import com.laniakea.annotation.KearpcReference;
 import com.laniakea.annotation.KearpcService;
+import com.laniakea.cache.AddressCache;
 import com.laniakea.cache.ReferenceCache;
 import com.laniakea.cache.ServiceCache;
 import com.laniakea.config.KearpcProperties;
+import com.laniakea.core.MessageClientInfo;
 import com.laniakea.executor.MassageClientExecutor;
 import com.laniakea.kit.LaniakeaKit;
 import com.laniakea.registry.zk.Consumer;
 import com.laniakea.registry.zk.Provider;
 import com.laniakea.serialize.KearpcSerializeProtocol;
-import io.netty.channel.Channel;
 import org.springframework.util.StringUtils;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import static com.laniakea.kit.LaniakeaKit.ip;
 import static com.laniakea.kit.LaniakeaKit.port;
@@ -56,7 +59,8 @@ public class RegistryContainer  {
         for (Map.Entry<String, KearpcReference> entry : referenceSubscribeMap.entrySet()) {
 
                 Consumer consumer = new Consumer();
-                consumer.setUniqueId(entry.getValue().uniqueId());
+                consumer.setRemoteKey(entry.getValue().uniqueId());
+                consumer.setNativeKey(entry.getKey());
                 registry.subscribe(consumer);
 
         }
@@ -74,18 +78,34 @@ public class RegistryContainer  {
                     throw new IllegalArgumentException("Non-subscription requires a specified address");
                 }
 
-                Map<String, Channel> channel = MassageClientExecutor.ME.getChannel();
+                CopyOnWriteArrayList channels;
 
-                if(channel.containsKey(reference.address())){
-                    return;
+                if (null == MassageClientExecutor.ME.getChannel().get(entry.getKey())) {
+                    channels = new CopyOnWriteArrayList<>();
+                }else{
+                    channels = (CopyOnWriteArrayList) MassageClientExecutor.ME.getChannel().get(entry.getKey());
                 }
 
-                String host = ip(reference.address());
-                int port = port(reference.address());
+                if(!AddressCache.getCache().contains(reference.address())){
+                    String host = ip(reference.address());
+                    int port = port(reference.address());
 
-                InetSocketAddress socketAddress = new InetSocketAddress(host,port);
-                MassageClientExecutor.ME.setClientProperties(socketAddress,
-                        KearpcSerializeProtocol.valueOf(reference.protocol())).start();
+                    CountDownLatch countDownLatch = new CountDownLatch(1);
+                    MessageClientInfo clientInfo = new MessageClientInfo(
+                            new InetSocketAddress(host, port),
+                            KearpcSerializeProtocol.valueOf(reference.protocol()),
+                            countDownLatch);
+                    MassageClientExecutor.ME.setClientProperties(clientInfo).start();
+
+                    try {
+                        countDownLatch.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                channels.add(AddressCache.getCache().get(reference.address()));
+                MassageClientExecutor.ME.getChannel().put(entry.getKey(),channels);
 
             }else{
                 referenceSubscribeMap.put(entry.getKey(),entry.getValue());

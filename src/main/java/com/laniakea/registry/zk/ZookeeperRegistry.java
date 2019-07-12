@@ -1,6 +1,5 @@
 package com.laniakea.registry.zk;
 
-import com.laniakea.kit.LaniakeaKit;
 import com.laniakea.registry.ProviderObserver;
 import com.laniakea.registry.Registry;
 import com.laniakea.serialize.KearpcSerializeProtocol;
@@ -141,7 +140,7 @@ public class ZookeeperRegistry implements Registry {
             if (null != optionalUrl) {
                 url = optionalUrl;
             } else {
-                String consumerPath = buildConsumerPath(consumer.getUniqueId());
+                String consumerPath = buildConsumerPath(consumer.getRemoteKey());
                 String addressStr = hostport(consumer.getSocketAddress().getHostName(),consumer.getSocketAddress().getPort());
                 url = consumerPath + CUTTER + addressStr;
                 consumerUrls.putIfAbsent(consumer, url);
@@ -168,10 +167,10 @@ public class ZookeeperRegistry implements Registry {
         List<String> providerAddress = null;
         subscribeCreateNode(consumer);
         try {
-            String providerPath = buildProviderPath(consumer.getUniqueId());
+            String providerPath = buildProviderPath(consumer.getRemoteKey());
             try {
                 providerAddress = zkClient.getChildren().forPath(providerPath);
-                providerAddress.forEach(path -> observer.add(path));
+                observer.add(consumer.getNativeKey(),providerAddress);
             } catch (KeeperException.NodeExistsException nodeExistsException) {
                 providerAddress = new CopyOnWriteArrayList<>();
                 LOGGER.warn("consumer has notexists in zookeeper, path=" + providerPath,nodeExistsException);
@@ -183,13 +182,13 @@ public class ZookeeperRegistry implements Registry {
                 String path = event.getData().getPath();
                 switch (event.getType()) {
                     case CHILD_ADDED:
-                        observer.add(LaniakeaKit.buildEndCutter(path));
+                        observer.add(consumer.getNativeKey(),buildEndCutter(path));
                         break;
                     case CHILD_REMOVED:
-                        observer.delete(LaniakeaKit.buildEndCutter(path));
+                        observer.delete(consumer.getNativeKey(),buildEndCutter(path));
                         break;
                     case CHILD_UPDATED:
-                        observer.update(LaniakeaKit.buildEndCutter(path));
+                        observer.update(consumer.getNativeKey(),buildEndCutter(path));
                         break;
                     default:
                         break;
@@ -214,7 +213,7 @@ public class ZookeeperRegistry implements Registry {
 
     @Override
     public void unSubscribe(Consumer consumer) {
-        String consumerPath = buildConsumerPath(consumer.getUniqueId());
+        String consumerPath = buildConsumerPath(consumer.getRemoteKey());
         String addressStr = hostport(consumer.getSocketAddress().getHostName(),consumer.getSocketAddress().getPort());
         String url = consumerPath + CUTTER + addressStr;
         try {

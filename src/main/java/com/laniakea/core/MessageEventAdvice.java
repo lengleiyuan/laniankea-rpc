@@ -1,6 +1,8 @@
 package com.laniakea.core;
 
 import com.laniakea.annotation.KearpcReference;
+import io.netty.channel.Channel;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.UUID;
@@ -15,13 +17,12 @@ public class MessageEventAdvice<T> implements InvocationHandler {
 
     private MessageProxy messageProxy;
 
-    private String address;
 
 
-    public MessageEventAdvice(MessageProxy messageProxy,MessageProxyInterceptor interceptor, String address){
+
+    public MessageEventAdvice(MessageProxy messageProxy,MessageProxyInterceptor interceptor){
         this.messageProxy = messageProxy;
         this.interceptor = interceptor;
-        this.address = address;
     }
 
 
@@ -30,20 +31,19 @@ public class MessageEventAdvice<T> implements InvocationHandler {
 
         MessageRequest request = new MessageRequest();
         request.setMessageId(UUID.randomUUID().toString());
-        KearpcReference reference = method.getDeclaringClass()
-                .getAnnotation(KearpcReference.class);
+        Class<?> declaringClass = method.getDeclaringClass();
+        KearpcReference reference = declaringClass.getAnnotation(KearpcReference.class);
 
         request.setClassName(reference.uniqueId());
         request.setMethodName(method.getName());
         request.setTypeParameters(method.getParameterTypes());
         request.setParameters(args);
 
-        interceptor.beforeMessage(address);
+        Channel channel = interceptor.beforeMessage();
 
-        T t = (T) messageProxy.sendMessage(request);
+        T t = (T) messageProxy.sendMessage(request,channel);
 
-        interceptor.afterMessage(address,t);
+        return (T) interceptor.afterMessage(t, channel);
 
-        return t;
     }
 }

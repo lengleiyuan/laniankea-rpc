@@ -1,11 +1,9 @@
 package com.laniakea.executor;
 
-import com.laniakea.cache.SemaphoreCache;
+import com.laniakea.annotation.KearpcReference;
+import com.laniakea.cache.AddressCache;
 import com.laniakea.controller.AsyncPullController;
-import com.laniakea.core.MessageClientHandler;
-import com.laniakea.core.MessageEventAdvice;
-import com.laniakea.core.SerializeChannelInitializer;
-import com.laniakea.serialize.KearpcSerializeProtocol;
+import com.laniakea.core.*;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -15,13 +13,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Proxy;
 import java.net.InetSocketAddress;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static com.laniakea.kit.LaniakeaKit.hostport;
 
@@ -41,23 +36,20 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
 
     private Bootstrap bootstrap;
 
-    private InetSocketAddress socketAddress;
+    private MessageClientInfo clientInfo;
 
-    private KearpcSerializeProtocol protocol;
+    private Map<String, CopyOnWriteArrayList<Channel>> cache = new ConcurrentHashMap<>();
 
-    private Map<String, Channel> cache = new ConcurrentHashMap<>();
-
-    public  MassageClientExecutor setClientProperties(InetSocketAddress socketAddress, KearpcSerializeProtocol protocol) {
-        this.socketAddress = socketAddress;
-        this.protocol = protocol;
+    public  MassageClientExecutor setClientProperties(MessageClientInfo clientInfo) {
+        this.clientInfo = clientInfo;
         return this;
     }
 
-    public Channel get(String key){
+    public CopyOnWriteArrayList<Channel> get(String key){
         return cache.get(key);
     }
 
-    public  Map<String, Channel> getChannel(){
+    public  Map<String, CopyOnWriteArrayList<Channel>> getChannel(){
         return cache;
     }
 
@@ -76,31 +68,32 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
 
     public <T> T create(Class<T> rpcInterface) {
 
-        String address = hostport(socketAddress.getHostName(), socketAddress.getPort());
-        SemaphoreCache.getCache().acquire(address);
-
-        return (T) Proxy.newProxyInstance(rpcInterface.getClassLoader(), new Class[] {rpcInterface},
-                new MessageEventAdvice(controller,controller, address));
+        CopyOnWriteArrayList<Channel> channels = cache.get(rpcInterface.getName());
+        KearpcReference reference = rpcInterface.getAnnotation(KearpcReference.class);
+        int concurrentSize = reference.maximumSize();
+        return (T) Proxy.newProxyInstance(rpcInterface.getClassLoader(),
+                new Class[] {rpcInterface},
+                new MessageEventAdvice(controller,
+                new BalanceMessageProxyInterceptor<T>(channels,new Semaphore(concurrentSize))));
     }
 
 
 
     public void start() {
 
-        CompletableFuture.runAsync(new ClientInitializeTask(socketAddress,protocol));
+        CompletableFuture.runAsync(new ClientInitializeTask(clientInfo));
 
     }
 
-    public void close() {
-
-        cache.values().forEach(channel -> {
-            try {
-                channel.close().sync();
-            } catch (InterruptedException e) {
-                logger.warn(e.getMessage(),e);
-            }
-        });
-
+    public void close () {
+        cache.values().forEach(channels ->channels.forEach(
+                channel -> {
+                    try {
+                        channel.close().sync();
+                    } catch (InterruptedException e) {
+                        logger.warn(e.getMessage(),e);
+                    }
+             }));
         eventLoopGroup.shutdownGracefully();
         cache.clear();
 
@@ -108,14 +101,11 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
 
     class ClientInitializeTask implements Runnable {
 
-        private InetSocketAddress socketAddress;
-
-        private KearpcSerializeProtocol protocol;
+        private final MessageClientInfo clientInfo;
 
 
-        public  ClientInitializeTask (InetSocketAddress socketAddress,KearpcSerializeProtocol protocol) {
-            this.socketAddress = socketAddress;
-            this.protocol = protocol;
+        public  ClientInitializeTask (MessageClientInfo clientInfo) {
+            this.clientInfo = clientInfo;
         }
 
         public void run() {
@@ -126,25 +116,32 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
 
             bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class);
 
+            bootstrap.option(ChannelOption.SO_SNDBUF, socketSndbufSize);
+
+            bootstrap.option(ChannelOption.SO_RCVBUF, socketRcvbufSize);
+
             bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
 
+            bootstrap.option(ChannelOption.TCP_NODELAY, true);
+
             bootstrap.handler(new SerializeChannelInitializer()
-                    .buildSerialize(protocol)
+                    .buildSerialize(clientInfo.getSerialize())
                     .buildHandle(new MessageClientHandler()));
 
 
-            ChannelFuture channelFuture = bootstrap.connect(socketAddress);
+            ChannelFuture channelFuture = bootstrap.connect(clientInfo.getSocketAddress());
 
             channelFuture.addListener((listener) -> channelFuture.addListener((ChannelFuture cx) -> {
+                InetSocketAddress socketAddress = clientInfo.getSocketAddress();
                 if (cx.isSuccess()) {
-                   if (logger.isInfoEnabled()){
-                        logger.info("channel link successful, serialize: {} ",protocol);
+                    if (logger.isInfoEnabled()) {
+                        logger.info("channel link successful, serialize: {} ", clientInfo.getSerialize());
                     }
-                    cache.put(hostport(socketAddress.getHostName(),socketAddress.getPort()),cx.channel());
-                    SemaphoreCache.getCache().release(hostport(socketAddress.getHostName(),socketAddress.getPort()));
+                    AddressCache.getCache().put(hostport(socketAddress.getHostName(), socketAddress.getPort()), cx.channel());
+                    clientInfo.getCoundDownLatch().countDown();
                 } else {
                     if (logger.isInfoEnabled()) {
-                        logger.info("channel is down,start to reconnecting to: " + socketAddress.getAddress().getHostAddress() + ':'
+                        logger.info("channel is down,start to reconnecting to: " + socketAddress.getHostName() + ':'
                                 + socketAddress.getPort());
                     }
                     eventLoopGroup.schedule(this, 10, TimeUnit.SECONDS);
@@ -152,7 +149,6 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
             }));
 
         }
-
     }
 
 }

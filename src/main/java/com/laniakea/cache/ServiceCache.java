@@ -28,4 +28,8 @@ public class ServiceCache {
     public void clear(){
         cache.clear();
     }
+
+    public int size(){
+        return cache.size();
+    }
 }

@@ -1,15 +1,19 @@
 package com.laniakea.core;
 
+import io.netty.channel.Channel;
+
+
 /**
  * @author luochang
- * @version ControllerEventProxy.java, v 0.1 2019年07月09日 16:30 luochang Exp
+ * @version MessageProxyInterceptor.java, v 0.1 2019年07月09日 16:30 luochang Exp
  */
-public interface MessageProxyInterceptor {
+public interface MessageProxyInterceptor<T> {
 
 
-    void beforeMessage(String address) throws Throwable;
+    Channel beforeMessage() throws Throwable;
 
 
-    void afterMessage(String address, Object obj) throws Throwable;
+    T afterMessage(T t, Channel channel) throws Throwable;
+
 
 }

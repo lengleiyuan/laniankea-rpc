@@ -1,7 +1,6 @@
 package com.laniakea.core;
 import com.laniakea.cache.MessageCache;
 import com.laniakea.cache.ReferenceCache;
-import com.laniakea.cache.SemaphoreCache;
 import com.laniakea.cache.ServiceCache;
 import com.laniakea.config.KearpcProperties;
 import com.laniakea.executor.MassageClientExecutor;
@@ -18,16 +17,20 @@ public class BrokerContainer implements Switch {
 
     @Override
     public void start() {
-        MassageServerExecutor.init(properties).start();
+
+        if (ServiceCache.getCache().size() > 0) {
+            MassageServerExecutor.init(properties).start();
+        }
+
     }
 
     @Override
     public void close()  {
-
-        MassageServerExecutor.ME.close();
+        if(null != MassageServerExecutor.ME){
+            MassageServerExecutor.ME.close();
+        }
         MassageClientExecutor.ME.close();
         MessageCache.getCache().clear();
-        SemaphoreCache.getCache().clear();
         ReferenceCache.getCache().clear();
         ServiceCache.getCache().clear();
     }

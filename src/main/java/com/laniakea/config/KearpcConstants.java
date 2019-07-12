@@ -33,5 +33,7 @@ public interface KearpcConstants {
 
     String SEND_ASYN_MESSAGE = "sendAsynMessage";
 
+    int DEFAULT_SIZE = 65535;
+
 
 }
