@@ -25,11 +25,11 @@ public class BrokerContainer implements Switch {
     }
 
     @Override
-    public void close()  {
+    public void destroy()  {
         if(null != MassageServerExecutor.ME){
-            MassageServerExecutor.ME.close();
+            MassageServerExecutor.ME.destroy();
         }
-        MassageClientExecutor.ME.close();
+        MassageClientExecutor.ME.destroy();
         MessageCache.getCache().clear();
         ReferenceCache.getCache().clear();
         ServiceCache.getCache().clear();

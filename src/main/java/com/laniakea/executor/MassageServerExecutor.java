@@ -69,7 +69,7 @@ public class MassageServerExecutor extends AbtractMassgeExecutor {
     }
 
 
-    public void close() {
+    public void destroy() {
         worker.shutdownGracefully();
         boss.shutdownGracefully();
         MassageClientExecutor.threadPoolExecutor.shutdown();

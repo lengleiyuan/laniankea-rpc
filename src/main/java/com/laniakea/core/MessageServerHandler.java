@@ -12,7 +12,7 @@ public class MessageServerHandler extends AbstractMassgeHandleWrapper {
 
     @Override
     public void handleMessage(ChannelHandlerContext ctx, Object msg) {
-        MessageRequest request = (MessageRequest) msg;
+        LaniakeaRequest request = (LaniakeaRequest) msg;
         AsyncPushController push = new AsyncPushController(request,ctx);
         push.writeAndFlush();
     }

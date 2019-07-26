@@ -9,5 +9,5 @@ public interface Switch {
 
      void start();
 
-     void close();
+     void destroy();
 }

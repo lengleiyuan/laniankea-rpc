@@ -51,10 +51,10 @@ public class SelectorProtocol {
     private ChannelPipeline ProtostuffChannel(ChannelPipeline pipeline, AbstractMassgeHandleWrapper wrapper) {
         ProtostuffCodecKit kit = new ProtostuffCodecKit();
         if(wrapper instanceof MessageClientHandler){
-            kit.setGenericClass(MessageResponse.class);
+            kit.setGenericClass(LaniakeaResponse.class);
         }
         if(wrapper instanceof MessageServerHandler){
-            kit.setGenericClass(MessageRequest.class);
+            kit.setGenericClass(LaniakeaRequest.class);
         }
         pipeline.addLast(new MessageEncoder(kit));
         pipeline.addLast(new MessageDecoder(kit));

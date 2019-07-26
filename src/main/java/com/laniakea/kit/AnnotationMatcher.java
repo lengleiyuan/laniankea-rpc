@@ -1,4 +1,4 @@
-package com.laniakea.core;
+package com.laniakea.kit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author luochang
  * @version AnnotationRegisryMatcher.java, v 0.1 2019年05月28日 18:47 luochang Exp
  */
-public final class AnnotationRegisryMatcher {
+public final class AnnotationMatcher {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

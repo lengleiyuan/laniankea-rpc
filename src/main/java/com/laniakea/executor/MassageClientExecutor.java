@@ -17,6 +17,7 @@ import java.lang.reflect.Proxy;
 import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.laniakea.kit.LaniakeaKit.hostport;
 
@@ -32,15 +33,19 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
 
     private volatile AsyncPullController<T> controller = new AsyncPullController<>();
 
-    private EventLoopGroup eventLoopGroup;
+    private EventLoopGroup eventLoopGroup = new NioEventLoopGroup(parallel);
 
-    private Bootstrap bootstrap;
+    private static ConcurrentMap<EventLoopGroup, AtomicInteger> refCounter = new ConcurrentHashMap<>();
 
-    private MessageClientInfo clientInfo;
+    private ConsumerConfig clientInfo;
 
     private Map<String, CopyOnWriteArrayList<Channel>> cache = new ConcurrentHashMap<>();
 
-    public  MassageClientExecutor setClientProperties(MessageClientInfo clientInfo) {
+    public EventLoopGroup getEventLoopGroup() {
+        return eventLoopGroup;
+    }
+
+    public  MassageClientExecutor setClientProperties(ConsumerConfig clientInfo) {
         this.clientInfo = clientInfo;
         return this;
     }
@@ -65,27 +70,30 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
         return ME;
     }
 
-
     public <T> T create(Class<T> rpcInterface) {
 
         CopyOnWriteArrayList<Channel> channels = cache.get(rpcInterface.getName());
         KearpcReference reference = rpcInterface.getAnnotation(KearpcReference.class);
-        int concurrentSize = reference.maximumSize();
+
+        MessageBalanceProxyInterceptor<T> interceptor = new MessageBalanceProxyInterceptor<>
+                (channels, new Semaphore(reference.maximumSize()));
+        MessageEventAdvice messageEventAdvice = new MessageEventAdvice(controller, interceptor);
+
         return (T) Proxy.newProxyInstance(rpcInterface.getClassLoader(),
-                new Class[] {rpcInterface},
-                new MessageEventAdvice(controller,
-                new BalanceMessageProxyInterceptor<T>(channels,new Semaphore(concurrentSize))));
+                new Class[] {rpcInterface}, messageEventAdvice);
     }
 
 
 
     public void start() {
 
-        CompletableFuture.runAsync(new ClientInitializeTask(clientInfo));
+      /*  CompletableFuture.runAsync(new ClientInitializeTask(clientInfo))
+                .thenAccept((Void) -> clientInfo.getCoundDownLatch().countDown())
+                .thenAccept();*/
 
     }
 
-    public void close () {
+    public void destroy () {
         cache.values().forEach(channels ->channels.forEach(
                 channel -> {
                     try {
@@ -101,18 +109,16 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
 
     class ClientInitializeTask implements Runnable {
 
-        private final MessageClientInfo clientInfo;
+        private final ConsumerConfig clientInfo;
 
 
-        public  ClientInitializeTask (MessageClientInfo clientInfo) {
+        public  ClientInitializeTask (ConsumerConfig clientInfo) {
             this.clientInfo = clientInfo;
         }
 
         public void run() {
 
-            bootstrap = new Bootstrap();
-
-            eventLoopGroup =  new NioEventLoopGroup(parallel);
+            Bootstrap bootstrap = new Bootstrap();
 
             bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class);
 
@@ -130,15 +136,19 @@ public class MassageClientExecutor<T> extends AbtractMassgeExecutor {
 
 
             ChannelFuture channelFuture = bootstrap.connect(clientInfo.getSocketAddress());
+            Channel channel = bootstrap.connect().syncUninterruptibly().channel();
+
+            InetSocketAddress socketAddress = clientInfo.getSocketAddress();
+            AddressCache.getCache().put(hostport(socketAddress.getHostName(), socketAddress.getPort()),channel);
 
             channelFuture.addListener((listener) -> channelFuture.addListener((ChannelFuture cx) -> {
-                InetSocketAddress socketAddress = clientInfo.getSocketAddress();
+
                 if (cx.isSuccess()) {
                     if (logger.isInfoEnabled()) {
                         logger.info("channel link successful, serialize: {} ", clientInfo.getSerialize());
                     }
-                    AddressCache.getCache().put(hostport(socketAddress.getHostName(), socketAddress.getPort()), cx.channel());
-                    clientInfo.getCoundDownLatch().countDown();
+
+
                 } else {
                     if (logger.isInfoEnabled()) {
                         logger.info("channel is down,start to reconnecting to: " + socketAddress.getHostName() + ':'

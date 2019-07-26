@@ -1,12 +1,14 @@
 package com.laniakea.registry;
 
 import com.laniakea.cache.AddressCache;
-import com.laniakea.core.MessageClientInfo;
+import com.laniakea.core.ConsumerConfig;
 import com.laniakea.executor.MassageClientExecutor;
 import com.laniakea.serialize.KearpcSerializeProtocol;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -21,7 +23,7 @@ import static com.laniakea.kit.LaniakeaKit.*;
  */
 public class ProviderObserver {
 
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(ProviderObserver.class);
 
     public void add(String uniqueId,String path) {
 
@@ -39,7 +41,7 @@ public class ProviderObserver {
         if(!AddressCache.getCache().contains(address)){
             KearpcSerializeProtocol protocol = KearpcSerializeProtocol.valueOf(buildProtocal(path));
             CountDownLatch countDownLatch = new CountDownLatch(1);
-            MessageClientInfo clientInfo = new MessageClientInfo(
+            ConsumerConfig clientInfo = new ConsumerConfig(
                     new InetSocketAddress(ip(address), port(address)),
                     protocol,countDownLatch);
             MassageClientExecutor.ME.setClientProperties(clientInfo).start();
@@ -47,7 +49,7 @@ public class ProviderObserver {
             try {
                 countDownLatch.await();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage(),e);
             }
 
         }

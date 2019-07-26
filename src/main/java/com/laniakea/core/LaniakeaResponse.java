@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author luochang
  * @version MessageResponse.java, v 0.1 2019年05月30日 12:22 luochang Exp
  */
-public class MessageResponse<T> implements Serializable {
+public class LaniakeaResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,9 +19,9 @@ public class MessageResponse<T> implements Serializable {
 
     private T result;
 
-    public MessageResponse(){}
+    public LaniakeaResponse(){}
 
-    public MessageResponse(Throwable throwable, ChannelHandlerContext ctx,String messageId) {
+    public LaniakeaResponse(Throwable throwable, ChannelHandlerContext ctx, String messageId) {
         StackTraceElement stackTraceElement = throwable.getCause().getStackTrace()[0];
         setError(throwable.getMessage().concat(":")
                 .concat(stackTraceElement.getClassName()).concat(".")

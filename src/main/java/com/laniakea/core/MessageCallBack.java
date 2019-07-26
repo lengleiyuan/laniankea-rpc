@@ -24,9 +24,9 @@ public class MessageCallBack<T> {
 
     private Channel channel;
 
-    private MessageResponse response;
-    private Lock            lock   = new ReentrantLock();
-    private Condition       finish = lock.newCondition();
+    private LaniakeaResponse response;
+    private Lock             lock   = new ReentrantLock();
+    private Condition        finish = lock.newCondition();
 
     public MessageCallBack( Channel channel){
         this.channel = channel;
@@ -53,7 +53,7 @@ public class MessageCallBack<T> {
         }
     }
 
-    public void finish(MessageResponse reponse) {
+    public void finish(LaniakeaResponse reponse) {
         try {
             lock.lock();
             this.response = reponse;

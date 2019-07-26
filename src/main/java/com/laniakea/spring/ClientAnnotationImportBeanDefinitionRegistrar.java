@@ -4,7 +4,7 @@ import com.laniakea.annotation.KearpcReference;
 import com.laniakea.annotation.KearpcService;
 import com.laniakea.cache.ReferenceCache;
 import com.laniakea.cache.ServiceCache;
-import com.laniakea.core.AnnotationRegisryMatcher;
+import com.laniakea.kit.AnnotationMatcher;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.*;
@@ -32,7 +32,7 @@ public class ClientAnnotationImportBeanDefinitionRegistrar implements ImportBean
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry){
 
 
-        AnnotationMetadata metadata = AnnotationRegisryMatcher
+        AnnotationMetadata metadata = AnnotationMatcher
                 .registryfindAnnotationMetadata(registry, ComponentScan.class.getName());
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(metadata
                 .getAnnotationAttributes(ComponentScan.class.getName(), true));

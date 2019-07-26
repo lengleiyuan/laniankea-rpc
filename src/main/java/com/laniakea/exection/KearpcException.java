@@ -10,8 +10,12 @@ public class KearpcException extends RuntimeException {
         super();
     }
 
+
     public KearpcException(String msg) {
         super(msg);
+    }
+    public KearpcException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

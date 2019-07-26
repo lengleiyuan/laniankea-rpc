@@ -1,8 +1,8 @@
 package com.laniakea.controller;
 
 import com.laniakea.cache.MessageCache;
-import com.laniakea.core.MessageRequest;
-import com.laniakea.core.MessageResponse;
+import com.laniakea.core.LaniakeaRequest;
+import com.laniakea.core.LaniakeaResponse;
 import com.laniakea.exection.KearpcException;
 import com.laniakea.executor.MassageServerExecutor;
 import io.netty.channel.ChannelHandlerContext;
@@ -21,17 +21,17 @@ public class AsyncPushController {
 
     private Logger logger = LoggerFactory.getLogger(AsyncPushController.class);
 
-    private MessageRequest request;
+    private LaniakeaRequest request;
 
     private ChannelHandlerContext ctx;
 
-    public AsyncPushController(MessageRequest request, ChannelHandlerContext ctx) {
+    public AsyncPushController(LaniakeaRequest request, ChannelHandlerContext ctx) {
         this.request = request;
         this.ctx = ctx;
     }
 
-    public MessageResponse call() {
-        MessageResponse response = new MessageResponse();
+    public LaniakeaResponse call() {
+        LaniakeaResponse response = new LaniakeaResponse();
         response.setMessageId(request.getMessageId());
         String className = request.getClassName();
         Object serviceBean = MessageCache.getCache().get(className);
@@ -51,7 +51,7 @@ public class AsyncPushController {
 
     public void writeAndFlush(){
         CompletableFuture.supplyAsync(this::call, MassageServerExecutor.ME.threadPoolExecutor).handle(
-                ((response, throwable) -> null == response ? new MessageResponse(throwable, ctx, request.getMessageId()) : response))
+                ((response, throwable) -> null == response ? new LaniakeaResponse(throwable, ctx, request.getMessageId()) : response))
                 .thenAccept(response -> ctx.writeAndFlush(response)
                         .addListener((channelFuture) -> logger.info("Server Send message-id respone:" + request
                                 .getMessageId())));

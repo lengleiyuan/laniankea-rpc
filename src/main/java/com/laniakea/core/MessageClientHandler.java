@@ -12,7 +12,7 @@ public class MessageClientHandler extends AbstractMassgeHandleWrapper {
 
     @Override
     public void handleMessage(ChannelHandlerContext ctx, Object msg) {
-        MessageResponse response = (MessageResponse) msg;
+        LaniakeaResponse response = (LaniakeaResponse) msg;
         String messageId = response.getMessageId();
         CallbackCache cache = CallbackCache.getCache();
         MessageCallBack callBack = cache.getMassgeCallBack(messageId);

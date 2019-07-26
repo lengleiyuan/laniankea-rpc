@@ -8,7 +8,7 @@ import io.netty.channel.Channel;
  */
 public interface MessageProxy<T> {
 
-    T sendMessage(MessageRequest request, Channel channel) throws Throwable;
+    T sendMessage(LaniakeaRequest request, Channel channel) throws Throwable;
 
 
 }

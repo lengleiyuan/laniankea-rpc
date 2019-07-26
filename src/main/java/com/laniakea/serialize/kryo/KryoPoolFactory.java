@@ -4,8 +4,8 @@ package com.laniakea.serialize.kryo;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.pool.KryoFactory;
 import com.esotericsoftware.kryo.pool.KryoPool;
-import com.laniakea.core.MessageRequest;
-import com.laniakea.core.MessageResponse;
+import com.laniakea.core.LaniakeaRequest;
+import com.laniakea.core.LaniakeaResponse;
 import org.objenesis.strategy.StdInstantiatorStrategy;
 
 
@@ -16,8 +16,8 @@ public class KryoPoolFactory {
     private KryoFactory factory = ()->{
         Kryo kryo = new Kryo();
         kryo.setReferences(false);
-        kryo.register(MessageRequest.class);
-        kryo.register(MessageResponse.class);
+        kryo.register(LaniakeaRequest.class);
+        kryo.register(LaniakeaResponse.class);
         kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
         return kryo;
     };

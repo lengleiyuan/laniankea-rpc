@@ -1,7 +1,6 @@
 package com.laniakea.registry.zk;
 
-import com.laniakea.registry.ProviderObserver;
-import com.laniakea.registry.Registry;
+import com.laniakea.registry.*;
 import com.laniakea.serialize.KearpcSerializeProtocol;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -13,13 +12,11 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import static com.laniakea.config.KearpcConstants.CUTTER;
 import static com.laniakea.config.KearpcConstants.ETC;
 import static com.laniakea.kit.LaniakeaKit.*;
@@ -28,7 +25,7 @@ import static com.laniakea.kit.LaniakeaKit.*;
  * @author luochang
  * @version ZookeeperRegistry.java, v 0.1 2019年07月04日 15:24 luochang Exp
  */
-public class ZookeeperRegistry implements Registry {
+public class ZookeeperRegistry extends Registry {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ZookeeperRegistry.class);
 
@@ -46,12 +43,6 @@ public class ZookeeperRegistry implements Registry {
 
     private Map<Consumer, String> consumerUrls = new ConcurrentHashMap<>();
 
-    private String address;
-
-    @Override
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     @Override
     public void start(){

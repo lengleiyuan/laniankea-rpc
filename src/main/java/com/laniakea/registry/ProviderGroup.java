@@ -1,4 +1,4 @@
-package com.laniakea.registry.zk;
+package com.laniakea.registry;
 
 import java.util.ArrayList;
 import java.util.List;

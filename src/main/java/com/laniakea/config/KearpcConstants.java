@@ -15,6 +15,8 @@ public interface KearpcConstants {
 
     String THREAD_NAME = "KearpcThreadFactory";
 
+    String SERIALIZE        = "SERIALIZE";
+
     String JDKSERIALIZE        = "JDKSERIALIZE";
 
     String KRYOSERIALIZE       = "KRYOSERIALIZE";

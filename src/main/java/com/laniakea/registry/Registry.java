@@ -1,38 +1,38 @@
 package com.laniakea.registry;
 
-import com.laniakea.registry.zk.Consumer;
-import com.laniakea.registry.zk.Provider;
-import com.laniakea.registry.zk.ProviderGroup;
+import com.laniakea.core.Switch;
 
 /**
  * @author luochang
  * @version Registry.java, v 0.1 2019年07月03日 16:49 luochang Exp
  */
-public interface Registry {
+public abstract class Registry implements Switch {
 
-     void start();
-
-     void register(Provider provider);
+     protected String address;
 
 
-     void register(ProviderGroup providerGroup);
+     protected void setAddress(String address) {
+          this.address = address;
+     }
+
+     protected abstract void register(Provider provider);
 
 
-     void unRegister(Provider provider);
+     protected abstract void register(ProviderGroup providerGroup);
 
 
-     void unRegister(ProviderGroup providerGroup);
+     protected abstract void unRegister(Provider provider);
 
 
-     ProviderGroup subscribe(Consumer consumer);
+     protected abstract void unRegister(ProviderGroup providerGroup);
 
 
-     void unSubscribe(Consumer consumer);
+     protected abstract ProviderGroup subscribe(Consumer consumer);
 
 
-     void destroy();
+     protected abstract void unSubscribe(Consumer consumer);
 
-     void setAddress(String address);
+
 
 
 

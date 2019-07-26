@@ -27,7 +27,7 @@ public class ApplicationContextClosedListener implements ApplicationListener {
 
         if ((event instanceof ContextClosedEvent) || (event instanceof ContextStoppedEvent)) {
 
-            brokerContainer.close();
+            brokerContainer.destroy();
 
             registry.destroy();
 

@@ -6,11 +6,9 @@ import com.laniakea.cache.AddressCache;
 import com.laniakea.cache.ReferenceCache;
 import com.laniakea.cache.ServiceCache;
 import com.laniakea.config.KearpcProperties;
-import com.laniakea.core.MessageClientInfo;
+import com.laniakea.core.ConsumerConfig;
 import com.laniakea.executor.MassageClientExecutor;
 import com.laniakea.kit.LaniakeaKit;
-import com.laniakea.registry.zk.Consumer;
-import com.laniakea.registry.zk.Provider;
 import com.laniakea.serialize.KearpcSerializeProtocol;
 import org.springframework.util.StringUtils;
 
@@ -91,7 +89,7 @@ public class RegistryContainer  {
                     int port = port(reference.address());
 
                     CountDownLatch countDownLatch = new CountDownLatch(1);
-                    MessageClientInfo clientInfo = new MessageClientInfo(
+                    ConsumerConfig clientInfo = new ConsumerConfig(
                             new InetSocketAddress(host, port),
                             KearpcSerializeProtocol.valueOf(reference.protocol()),
                             countDownLatch);

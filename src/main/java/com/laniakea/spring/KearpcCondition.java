@@ -1,7 +1,7 @@
 package com.laniakea.spring;
 
 import com.laniakea.annotation.EnableKearpc;
-import com.laniakea.core.AnnotationRegisryMatcher;
+import com.laniakea.kit.AnnotationMatcher;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
@@ -15,10 +15,10 @@ public class KearpcCondition implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
 
-        AnnotationMetadata annotationMetadata = AnnotationRegisryMatcher
+        AnnotationMetadata annotationMetadata = AnnotationMatcher
                 .registryfindAnnotationMetadata(context.getRegistry(), EnableKearpc.class.getName());
 
-        return null != annotationMetadata ? AnnotationRegisryMatcher.regisryMatchesAnnotation(annotationMetadata) : false;
+        return null != annotationMetadata ? AnnotationMatcher.regisryMatchesAnnotation(annotationMetadata) : false;
 
     }
 

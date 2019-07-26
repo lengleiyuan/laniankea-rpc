@@ -24,7 +24,7 @@ public class ReferenceFactory implements FactoryBean, DisposableBean {
 
     @Override
     public void destroy()  {
-        MassageClientExecutor.ME.close();
+        MassageClientExecutor.ME.destroy();
     }
 
     @Override

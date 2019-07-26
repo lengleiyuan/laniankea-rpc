@@ -8,18 +8,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author wb-lgc489196
- * @version HandlerInterceptor.java, v 0.1 2019年07月12日 10:24 wb-lgc489196 Exp
+ * @version MessageBalanceProxyInterceptor.java, v 0.1 2019年07月12日 10:24 wb-lgc489196 Exp
  */
-public class BalanceMessageProxyInterceptor<T> implements MessageProxyInterceptor<T>{
+public class MessageBalanceProxyInterceptor<T> implements MessageProxyInterceptor<T>{
 
     private List<Channel> channels;
 
-    private AtomicInteger atomicInteger = new AtomicInteger(0);
+    private AtomicInteger concurrentQuantity = new AtomicInteger(0);
 
     private Semaphore semaphore;
 
 
-    public BalanceMessageProxyInterceptor(List<Channel> channels,Semaphore semaphore){
+    public MessageBalanceProxyInterceptor(List<Channel> channels, Semaphore semaphore){
         this.semaphore = semaphore;
         this.channels = channels;
     }
@@ -28,12 +28,12 @@ public class BalanceMessageProxyInterceptor<T> implements MessageProxyIntercepto
     @Override
     public Channel beforeMessage() throws Throwable {
         semaphore.acquire();
-        return channels.get(atomicInteger.getAndIncrement() % channels.size());
+        return channels.get(concurrentQuantity.getAndIncrement() % channels.size());
     }
 
 
     @Override
-    public T afterMessage(T t, Channel channel) throws Throwable {
+    public T afterMessage(T t, Channel channel)  {
         semaphore.release();
         return t;
     }

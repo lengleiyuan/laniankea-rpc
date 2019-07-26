@@ -1,5 +1,6 @@
 package com.laniakea.core;
 
+import com.laniakea.registry.ProviderGroup;
 import com.laniakea.serialize.KearpcSerializeProtocol;
 
 import java.net.InetSocketAddress;
@@ -9,21 +10,32 @@ import java.util.concurrent.CountDownLatch;
  * @author wb-lgc489196
  * @version ClientInfo.java, v 0.1 2019年07月11日 17:38 wb-lgc489196 Exp
  */
-public class MessageClientInfo {
+public class ConsumerConfig {
+
 
     private InetSocketAddress socketAddress;
 
     private KearpcSerializeProtocol serialize;
 
+    private ProviderGroup providerGroup;
+
     private CountDownLatch coundDownLatch;
 
 
-    public MessageClientInfo(){}
+    public ConsumerConfig(){}
 
-    public MessageClientInfo(InetSocketAddress socketAddress, KearpcSerializeProtocol serialize,CountDownLatch coundDownLatch){
+    public ConsumerConfig(InetSocketAddress socketAddress, KearpcSerializeProtocol serialize, CountDownLatch coundDownLatch){
         this.socketAddress = socketAddress;
         this.serialize = serialize;
         this.coundDownLatch = coundDownLatch;
+    }
+
+    public ProviderGroup getProviderGroup() {
+        return providerGroup;
+    }
+
+    public void setProviderGroup(ProviderGroup providerGroup) {
+        this.providerGroup = providerGroup;
     }
 
     public CountDownLatch getCoundDownLatch() {

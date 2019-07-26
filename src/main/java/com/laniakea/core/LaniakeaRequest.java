@@ -6,7 +6,7 @@ package com.laniakea.core;
  */
 import java.io.Serializable;
 
-public class MessageRequest implements Serializable {
+public class LaniakeaRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

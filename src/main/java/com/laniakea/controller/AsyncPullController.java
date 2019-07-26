@@ -3,7 +3,7 @@ package com.laniakea.controller;
 import com.laniakea.cache.CallbackCache;
 import com.laniakea.core.MessageCallBack;
 import com.laniakea.core.MessageProxy;
-import com.laniakea.core.MessageRequest;
+import com.laniakea.core.LaniakeaRequest;
 import io.netty.channel.Channel;
 
 
@@ -14,7 +14,7 @@ import io.netty.channel.Channel;
 public class AsyncPullController<T> implements MessageProxy {
 
     @Override
-    public T sendMessage(MessageRequest request, Channel channel) throws Throwable {
+    public T sendMessage(LaniakeaRequest request, Channel channel) throws Throwable {
         MessageCallBack callBack = new MessageCallBack(channel);
         CallbackCache.getCache().putMassgeCallBack(request.getMessageId(), callBack);
         channel.writeAndFlush(request);

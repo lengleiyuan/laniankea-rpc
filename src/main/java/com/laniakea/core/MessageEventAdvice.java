@@ -29,7 +29,7 @@ public class MessageEventAdvice<T> implements InvocationHandler {
     @Override
     public T invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        MessageRequest request = new MessageRequest();
+        LaniakeaRequest request = new LaniakeaRequest();
         request.setMessageId(UUID.randomUUID().toString());
         Class<?> declaringClass = method.getDeclaringClass();
         KearpcReference reference = declaringClass.getAnnotation(KearpcReference.class);
