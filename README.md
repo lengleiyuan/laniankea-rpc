@@ -1,12 +1,10 @@
 # laniakea-rpc #
 
-项目依赖netty,完美兼容spring。根据简易化理念,简化xml配置,基于注解开发。项目采用java 8 lambda流式风格编码,支持多种序列化,独立业务任务异步处理,高并发性能突出。
+项目依赖netty,兼容spring。根据简易化理念,简化xml配置,基于注解开发。
 
-项目意义: 在成长过程中，很多时候都点到为止，对知识却不是很深刻，因此坚定要动手去做. 本人技术能力有限，有不对地方请指正.
 
 ## 流程 ##
 
-![Image text](https://github.com/lengleiyuan/laniankea-rpc/blob/master/process.png)
 
 
 ## 环境 ##
